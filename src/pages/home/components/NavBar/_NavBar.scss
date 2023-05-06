@@ -11,7 +11,7 @@
 		180deg,
 		rgba(0, 0, 0, 0.7) 10%,
 		transparent
-		);
+   );
 	transition: background-color 0.4s;
 	z-index: 20;
 	.logo-links {
@@ -35,14 +35,14 @@
 				li {
 					&:first-child {
 						a {
-						font-weight: 600;
+						font-weight: 500;
 						color: #fff;
 						}
 					}
 					a {
 						color: #e5e5e5;
 						font-size: 14px;
-						font-weight: 400;
+						font-weight: 300;
 						text-decoration: none;
 						transition: color 0.4s;
 						&:hover {
@@ -72,19 +72,19 @@
 					border: none;
 					background-color: transparent;
 					height: 100%;
-					padding: 1px 6px;
+					padding: 0 6px;
 					cursor: pointer;
 					svg{
 						fill: #fff;
 					}
 				}
 				input {
-					background-color: transparent;
 					color: #e5e5e5;
+					background-color: transparent;
+					width: 0;
+					height: 100%;
 					font-size: 0.9rem;
 					border: none;
-					height: 100%;
-					width: 0;
 					&:focus-visible {
 						outline: none;
 					}
@@ -95,7 +95,7 @@
 				}
 			}
 		}
-		.notif {
+		.notification {
 			margin-right: 15px;
 			margin-top: 0.2em;
 			padding: 2px 6px;
@@ -108,17 +108,17 @@
 			display: flex;
 			align-items: center;
 			cursor: pointer;
-			&:hover > .profile .arrowClose {
+			&:hover > .profiles .arrow-close {
 				transition: transform 0.4s ease;
 				transform: rotate(180deg);
 			}
-			&:hover > .profile .profileSelect .arrowOpen {
+			&:hover > .profiles .profile-select .arrow-open {
 				opacity: 1;
 			}
-			.profile {
+			.profiles {
 				display: flex;
 				align-items: center;
-				.profileSelect {
+				.profile-select {
 					position: relative;
 					height: 32px;
 					width: 32px;
@@ -127,7 +127,7 @@
 						width: 32px;
 						border-radius: 4px;
 					}
-					.arrowOpen {
+					.arrow-open {
 						position: absolute;
 						left: 50%;
 						bottom: -19px;
@@ -142,7 +142,7 @@
 						cursor: default;
 					}
 				}
-				.arrowClose {
+				.arrow-close {
 					border-color: #fff transparent;
 					border-style: solid;
 					border-width: 5px 5px 0;
