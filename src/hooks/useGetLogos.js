@@ -5,7 +5,7 @@ function useGetLogos(type, id) {
 
   useEffect(()=>{
     if (type)
-    fetch(`http://api.themoviedb.org/3/${type}/${id}/images?api_key=4c42277c85a8a8f307d358420965071c`)
+    fetch(`https://api.themoviedb.org/3/${type}/${id}/images?api_key=4c42277c85a8a8f307d358420965071c`)
       .then(response => response.json())
       .then((data) => {
         const logos = data.logos;
