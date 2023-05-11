@@ -28,7 +28,7 @@ function NavBar() {
           <ul>
             <li><a href="home.html">Inicio</a></li>
             <li><a href="#">Series</a></li>
-            <li><a href="#">Peliculas</a></li>
+            <li><a href="#">Películas</a></li>
             <li><a href="#">Novedades populares</a></li>
             <li><a href="#">Mi lista</a></li>
             <li><a href="#">Explora por idiomas</a></li>
