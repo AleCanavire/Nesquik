@@ -23,9 +23,9 @@ function Home() {
   useEffect(()=>{
     if (infoTitle) {
       const titleName = infoTitle.title || infoTitle.original_title || infoTitle.name || infoTitle.original_name;
-      document.title = `${titleName} - Netflix`
+      document.title = `${titleName} — Netflix`
     } else {
-      document.title = "Home - Netflix"
+      document.title = "Home — Netflix"
     }
   }, [infoTitle])
 

@@ -8,6 +8,8 @@ import { ReactComponent as ThumbsDown } from "../../../../assets/images/thumbs-d
 import { ReactComponent as ThumbsDownRated } from "../../../../assets/images/thumbs-down-rated.svg";
 import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-way-up.svg";
 import { ReactComponent as ThumbsWayUpRated } from "../../../../assets/images/thumbs-way-up-rated.svg";
+import EpisodesContainer from './EpisodesContainer';
+import MoreLikeThis from './MoreLikeThis';
 
 function TitleDetail({ title, closeDetail }) {
   const [showDetail, setShowDetail] = useState(false);
@@ -98,7 +100,7 @@ function TitleDetail({ title, closeDetail }) {
                 <button className="my-list">
                   <AddToMyList/>
                   <div className="my-list-tooltip">
-                    <span>Agregar a Mi lista</span>
+                    Agregar a Mi lista
                   </div>
                 </button>
                 <button className="thumbs-rate">
@@ -141,59 +143,86 @@ function TitleDetail({ title, closeDetail }) {
             </div>
             <div className="shadowBack"/>
           </div>
-          <div className="title-detail-info">
-            <div className="metadata-left">
-              <div className="metadata-info">
-                <span className="match-score">98 % para ti</span>
-                <span className="title-year">{year}</span>
-                <span className="title-duration">{duration}</span>
-                <span className="title-quality">HD</span>
-                <svg viewBox="0 0 58.07 24" className="svg-icon svg-icon-audio-description"><path fill="#fff" d="M18.34,10.7v7.62l-4.73,0ZM.5,26.6h8l2.17-3,7.49,0s0,2.08,0,3.06h5.7V2.77H17C16.3,3.79.5,26.6.5,26.6Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M30.63,8.91c3.6-.13,6.1,1.8,6.48,4.9.5,4.15-2.43,6.85-6.66,6.56V9.19A.26.26,0,0,1,30.63,8.91ZM25,3V26.56c5.78.11,10.22.32,13.49-1.85a12.2,12.2,0,0,0,5.14-11.36A11.52,11.52,0,0,0,33.38,2.72c-2.76-.23-8.25,0-8.25,0A.66.66,0,0,0,25,3Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M43.72,3.43c1.45-.4,1.88,1.2,2.51,2.31a18.73,18.73,0,0,1-1.42,20.6h-.92a1.86,1.86,0,0,1,.42-1.11,21.39,21.39,0,0,0,2.76-10.16A22.54,22.54,0,0,0,43.72,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M48.66,3.43c1.43-.4,1.87,1.2,2.5,2.31a18.83,18.83,0,0,1-1.42,20.6h-.91c-.07-.42.24-.79.41-1.11A21.39,21.39,0,0,0,52,15.07,22.63,22.63,0,0,0,48.66,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M53.57,3.43c1.46-.4,1.9,1.2,2.54,2.31a18.58,18.58,0,0,1-1.44,20.6h-.93c-.07-.42.24-.79.42-1.11A21,21,0,0,0,57,15.07,22.26,22.26,0,0,0,53.57,3.43Z" transform="translate(-0.5 -2.62)"></path></svg>
+          <div className="title-detail-body">
+            <div className="title-detail-metadata">
+              <div className="metadata-left">
+                <div className="metadata-info">
+                  <span className="match-score">98 % para ti</span>
+                  <span className="title-year">{year}</span>
+                  <span className="title-duration">{duration}</span>
+                  <span className="title-quality">HD</span>
+                  <svg viewBox="0 0 58.07 24" className="svg-icon svg-icon-audio-description"><path fill="#fff" d="M18.34,10.7v7.62l-4.73,0ZM.5,26.6h8l2.17-3,7.49,0s0,2.08,0,3.06h5.7V2.77H17C16.3,3.79.5,26.6.5,26.6Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M30.63,8.91c3.6-.13,6.1,1.8,6.48,4.9.5,4.15-2.43,6.85-6.66,6.56V9.19A.26.26,0,0,1,30.63,8.91ZM25,3V26.56c5.78.11,10.22.32,13.49-1.85a12.2,12.2,0,0,0,5.14-11.36A11.52,11.52,0,0,0,33.38,2.72c-2.76-.23-8.25,0-8.25,0A.66.66,0,0,0,25,3Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M43.72,3.43c1.45-.4,1.88,1.2,2.51,2.31a18.73,18.73,0,0,1-1.42,20.6h-.92a1.86,1.86,0,0,1,.42-1.11,21.39,21.39,0,0,0,2.76-10.16A22.54,22.54,0,0,0,43.72,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M48.66,3.43c1.43-.4,1.87,1.2,2.5,2.31a18.83,18.83,0,0,1-1.42,20.6h-.91c-.07-.42.24-.79.41-1.11A21.39,21.39,0,0,0,52,15.07,22.63,22.63,0,0,0,48.66,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M53.57,3.43c1.46-.4,1.9,1.2,2.54,2.31a18.58,18.58,0,0,1-1.44,20.6h-.93c-.07-.42.24-.79.42-1.11A21,21,0,0,0,57,15.07,22.26,22.26,0,0,0,53.57,3.43Z" transform="translate(-0.5 -2.62)"></path></svg>
+                </div>
+                <div className="title-synopsis">
+                  <p>{title.full_overview}</p>
+                </div>
               </div>
-              <div className="title-synopsis">
-                <p>{title.full_overview}</p>
-              </div>
-            </div>
-            <div className="metadata-right">
-              <div className="title-tags">
-                <span className="title-tag-label">Elenco: </span>
-                {cast?.map((actor, index) => {
-                  return(
-                    <span key={index} className="title-tag-item">{`${actor}, `}</span>
-                  )})
-                }
-                <span className="title-tag-item">más</span>
-              </div>
-              <div className="title-tags">
-                <span className="title-tag-label">Géneros: </span>
-                {genres?.map((genre, index) => {
-                  return(
-                    <span key={index} className="title-tag-item">{index !== 0 ?  `, ${genre}` : genre}</span>
-                  )})
-                }
-              </div>
-              <div className="title-tags">
-                <span className="title-tag-label">Creado por: </span>
-                {crew?.map((person, index) => {
-                  return(
-                    <span key={index} className="title-tag-item">{index !== 0 ?  `, ${person}` : person}</span>
-                  )})
-                }
-              </div>
-            </div>
-            <div className="similar">
-              <h3>Más títulos similares a este</h3>
-              <div className="titlesContainer">
-                <div className="similarTitles">
-                    
+              <div className="metadata-right">
+                <div className="title-tags">
+                  <span className="title-tag-label">Elenco: </span>
+                  {cast?.map((actor, index) => {
+                    return(
+                      <span key={index} className="title-tag-item">{`${actor}, `}</span>
+                    )})
+                  }
+                  <span className="title-tag-item">más</span>
+                </div>
+                <div className="title-tags">
+                  <span className="title-tag-label">Géneros: </span>
+                  {genres?.map((genre, index) => {
+                    return(
+                      <span key={index} className="title-tag-item">{index !== 0 ?  `, ${genre}` : genre}</span>
+                    )})
+                  }
+                </div>
+                <div className="title-tags">
+                  <span className="title-tag-label">Creado por: </span>
+                  {crew?.map((person, index) => {
+                    return(
+                      <span key={index} className="title-tag-item">{index !== 0 ?  `, ${person}` : person}</span>
+                    )})
+                  }
                 </div>
               </div>
             </div>
-            <div className="acercaDe">
-              <h3>Acerca de <span>{title.title || title.original_title || title.name || title.original_name}</span></h3>
-              <div className="created"><span>Creado por:</span> </div>
-              <div className="created"><span>Elenco:</span> , y más</div>
-              <div className="created"><span>Géneros:</span> </div>
+            { title.seasons && 
+              <EpisodesContainer
+                title={title}
+              />
+            }
+            <MoreLikeThis
+              title={title}
+            />
+            <div className="about-title-container">
+              <h3 className="about-title-header">
+                Acerca de <strong>{title.title || title.original_title || title.name || title.original_name}</strong>
+              </h3>
+              <div className="about-title-body">
+                <div className="about-tag">
+                  <span className="tag-label">Creado por: </span>
+                  { crew?.map((person, index) => {
+                    return(
+                      <span key={index} className="tag-item">{index !== 0 ?  `, ${person}` : person}</span>
+                    )})
+                  }
+                </div>
+                <div className="about-tag">
+                  <span className="tag-label">Elenco: </span>
+                  { cast?.map((actor, index) => {
+                    return(
+                      <span key={index} className="tag-item">{`${actor}, `}</span>
+                    )})
+                  } y más
+                </div>
+                <div className="about-tag">
+                  <span className="tag-label">Géneros: </span>
+                  { genres?.map((genre, index) => {
+                    return(
+                      <span key={index} className="tag-item">{index !== 0 ?  `, ${genre}` : genre}</span>
+                    )})
+                  }
+                </div>
+              </div>
             </div>
           </div>
         </div>

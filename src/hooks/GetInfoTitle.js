@@ -55,7 +55,8 @@ export function useGetVideo(type, id) {
       .then(response => response.json())
       .then(data => {
         const videos  = data.results;
-        const videoTitle =  videos.find(video => video.type === "Trailer")
+        const videoTitle =  videos.find(video => video.type === "Trailer" && video.iso_639_1 === "es") ||
+                            videos.find(video => video.type === "Trailer");
         setVideo(videoTitle);
       })
       .catch((error) => console.log(error));

@@ -17,10 +17,10 @@ function Header({ onAddInfo, infoTitle }) {
           setIsPlaying, actionButton, hidePlayer,  endedTrailer } = usePlayerActions();
   const overviewRef = useRef();
 
-  const title = useGetTitle("tv", "77169");
-  const video = useGetVideo("tv", "77169");
-  const logo = useGetLogos("tv", "77169");
-  const credits = useGetCredits("tv", "77169");
+  const title = useGetTitle(titleHeader?.type, titleHeader?.id);
+  const video = useGetVideo(titleHeader?.type, titleHeader?.id);
+  const logo = useGetLogos(titleHeader?.type, titleHeader?.id);
+  const credits = useGetCredits(titleHeader?.type, titleHeader?.id);
 
   useEffect(()=>{
     !titleHeader && setTitleHeader(randomTitle);
