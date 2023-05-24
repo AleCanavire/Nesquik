@@ -17,7 +17,7 @@ function usePlayerActions() {
   }
   const hidePlayer = (e, trailerDuration) => {
     const currentTime = Math.trunc(e.playedSeconds);
-    const hideTrailer = trailerDuration - 12;
+    const hideTrailer = trailerDuration - 14;
     currentTime === 3 && setShowTrailer(true);
     currentTime === hideTrailer && setShowTrailer(false);
   }
@@ -28,7 +28,7 @@ function usePlayerActions() {
   }
 
   return {
-    isMuted, isPlaying, setIsPlaying, actionButton, hidePlayer,
+    isMuted, isPlaying, setIsPlaying, setShowTrailer, actionButton, hidePlayer,
     showTrailer, trailerDuration, isEnded, endedTrailer
   }
 }

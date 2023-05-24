@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import ReactPlayer from 'react-player';
 import usePlayerActions from '../../../../hooks/usePlayerActions';
 import { ReactComponent as AddToMyList } from "../../../../assets/images/add.svg";
@@ -10,8 +10,9 @@ import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-
 import { ReactComponent as ThumbsWayUpRated } from "../../../../assets/images/thumbs-way-up-rated.svg";
 import EpisodesContainer from './EpisodesContainer';
 import MoreLikeThis from './MoreLikeThis';
+import { detailContext } from '../../../../context/detailContext';
 
-function TitleDetail({ title, closeDetail }) {
+function TitleDetail() {
   const [showDetail, setShowDetail] = useState(false);
   const { isMuted, isPlaying, showTrailer, trailerDuration, isEnded,
           setIsPlaying, actionButton, hidePlayer,  endedTrailer } = usePlayerActions();
@@ -21,37 +22,38 @@ function TitleDetail({ title, closeDetail }) {
   const [cast, setCast] = useState(null);
   const [crew, setCrew] = useState(null);
   const [genres, setGenres] = useState(null);
+  const { infoTitle, closeDetail } = useContext(detailContext);
 
   useEffect(()=>{
     setShowDetail(true);
 
     //YEAR
-    const year = title?.first_air_date?.split("-")[0] || title?.release_date?.split("-")[0]
+    const year = infoTitle?.first_air_date?.split("-")[0] || infoTitle?.release_date?.split("-")[0]
     setYear(year);
 
     // DURATION
-    if (title.type === "tv") {
-      const duration =  title?.number_of_seasons > 1
-                        ? `${title?.number_of_seasons} temporadas`
-                        : `${title?.number_of_episodes} episodios`
+    if (infoTitle.type === "tv") {
+      const duration =  infoTitle?.number_of_seasons > 1
+                        ? `${infoTitle?.number_of_seasons} temporadas`
+                        : `${infoTitle?.number_of_episodes} episodios`
       setDuration(duration);
-    } else if (title.type === "movie") {
-      const hours = Math.floor(title.runtime / 60);
-      const min = title.runtime % 60;
+    } else if (infoTitle.type === "movie") {
+      const hours = Math.floor(infoTitle.runtime / 60);
+      const min = infoTitle.runtime % 60;
       const duration = `${hours} h ${min} min`
       setDuration(duration);
     }
     
     // CAST
-    const cast = title.cast.slice(0, 3).map(actor => actor.name);
+    const cast = infoTitle.cast.slice(0, 3).map(actor => actor.name);
     setCast(cast)
 
     // GENRES
-    const genres = title.genres.map(genre => genre.name);
+    const genres = infoTitle.genres.map(genre => genre.name);
     setGenres(genres)
 
     // CREW
-    const crew = title.crew.slice(0, 3).map(person => person.name);
+    const crew = infoTitle.crew.slice(0, 3).map(person => person.name);
     setCrew(crew)
   }, [])
 
@@ -71,8 +73,8 @@ function TitleDetail({ title, closeDetail }) {
             <div className="title-media">
               <ReactPlayer
                 className="title-player"
-                style={title?.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.25)"}}
-                url={`https://www.youtube.com/watch?v=${title.video?.key}`}
+                style={infoTitle?.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.25)"}}
+                url={`https://www.youtube.com/watch?v=${infoTitle.video?.key}`}
                 width="100%"
                 height="100%"
                 muted={isMuted}
@@ -84,13 +86,13 @@ function TitleDetail({ title, closeDetail }) {
               <img
                 style={showTrailer ? {opacity: "0"} : {}}
                 className="title-backdrop"
-                src={`https://image.tmdb.org/t/p/w1280${title.backdrop_path}`}
+                src={`https://image.tmdb.org/t/p/w1280${infoTitle.backdrop_path}`}
               />
             </div>
             <div className="title-logo-and-buttons">
               <img
                 className="title-logo"
-                src={`https://image.tmdb.org/t/p/w300${title.logo}`}
+                src={`https://image.tmdb.org/t/p/w300${infoTitle.logo}`}
               />
               <div className="button-controls-container">
                 <button className="play-button">
@@ -147,14 +149,14 @@ function TitleDetail({ title, closeDetail }) {
             <div className="title-detail-metadata">
               <div className="metadata-left">
                 <div className="metadata-info">
-                  <span className="match-score">98 % para ti</span>
+                  <span className="match-score">{Math.floor((Math.random() * (99 - 88)) + 88)} % para ti</span>
                   <span className="title-year">{year}</span>
                   <span className="title-duration">{duration}</span>
                   <span className="title-quality">HD</span>
                   <svg viewBox="0 0 58.07 24" className="svg-icon svg-icon-audio-description"><path fill="#fff" d="M18.34,10.7v7.62l-4.73,0ZM.5,26.6h8l2.17-3,7.49,0s0,2.08,0,3.06h5.7V2.77H17C16.3,3.79.5,26.6.5,26.6Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M30.63,8.91c3.6-.13,6.1,1.8,6.48,4.9.5,4.15-2.43,6.85-6.66,6.56V9.19A.26.26,0,0,1,30.63,8.91ZM25,3V26.56c5.78.11,10.22.32,13.49-1.85a12.2,12.2,0,0,0,5.14-11.36A11.52,11.52,0,0,0,33.38,2.72c-2.76-.23-8.25,0-8.25,0A.66.66,0,0,0,25,3Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M43.72,3.43c1.45-.4,1.88,1.2,2.51,2.31a18.73,18.73,0,0,1-1.42,20.6h-.92a1.86,1.86,0,0,1,.42-1.11,21.39,21.39,0,0,0,2.76-10.16A22.54,22.54,0,0,0,43.72,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M48.66,3.43c1.43-.4,1.87,1.2,2.5,2.31a18.83,18.83,0,0,1-1.42,20.6h-.91c-.07-.42.24-.79.41-1.11A21.39,21.39,0,0,0,52,15.07,22.63,22.63,0,0,0,48.66,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M53.57,3.43c1.46-.4,1.9,1.2,2.54,2.31a18.58,18.58,0,0,1-1.44,20.6h-.93c-.07-.42.24-.79.42-1.11A21,21,0,0,0,57,15.07,22.26,22.26,0,0,0,53.57,3.43Z" transform="translate(-0.5 -2.62)"></path></svg>
                 </div>
                 <div className="title-synopsis">
-                  <p>{title.full_overview}</p>
+                  <p>{infoTitle.full_overview}</p>
                 </div>
               </div>
               <div className="metadata-right">
@@ -185,17 +187,17 @@ function TitleDetail({ title, closeDetail }) {
                 </div>
               </div>
             </div>
-            { title.seasons && 
+            { infoTitle.seasons && 
               <EpisodesContainer
-                title={title}
+                title={infoTitle}
               />
             }
             <MoreLikeThis
-              title={title}
+              title={infoTitle}
             />
             <div className="about-title-container">
               <h3 className="about-title-header">
-                Acerca de <strong>{title.title || title.original_title || title.name || title.original_name}</strong>
+                Acerca de <strong>{infoTitle.title || infoTitle.original_title || infoTitle.name || infoTitle.original_name}</strong>
               </h3>
               <div className="about-title-body">
                 <div className="about-tag">
