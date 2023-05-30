@@ -2,7 +2,7 @@
 	position: fixed;
 	top: 0;
 	width: 100%;
-	height: 68px;
+	height: 41px;
 	padding: 0 4%;
 	display: flex;
 	align-items: center;
@@ -14,89 +14,104 @@
    );
 	transition: background-color 0.4s;
 	z-index: 20;
-	.logo-links {
+	.menu-navigation {
 		display: flex;
 		align-items: center;
-		.nav-logo {
-			height: 25px;
-			a {
-				font-size: 25px;
-				svg {
-					height: 25px;
-				}
-			}
+		.logo-icon {
+         margin-right: 5px;
+			a{
+            display: flex;
+            font-size: 1.2rem;
+            svg{
+               height: 1.8em;
+            }
+         }
 		}
-		.nav-links {
-			margin-left: 42px;
-			ul {
-				display: flex;
-				list-style: none;
-				gap: 20px;
-				li {
-					&:first-child {
-						a {
-						font-weight: 500;
-						color: #fff;
-						}
-					}
-					a {
-						color: #e5e5e5;
-						font-size: 14px;
-						font-weight: 300;
-						text-decoration: none;
-						transition: color 0.4s;
-						&:hover {
-						color: #b3b3b3;
-						transition: color 0.4s;
-						}
-					}
-				}
-			}
+		.navigation-container {
+         display: flex;
+         list-style: none;
+         font-size: 1.2rem;
+         .navigation-item {
+            margin-left: 18px;
+            &:first-child {
+               display: none;
+            }
+            a {
+               color: #e5e5e5;
+               font-weight: 300;
+               text-decoration: none;
+               transition: color 0.4s;
+               &:hover {
+               color: #b3b3b3;
+               transition: color 0.4s;
+               }
+            }
+         }
 		}
 	}
-	.icons {
+	.secondary-navigation {
 		height: 100%;
 		display: flex;
 		align-items: center;
-		.search {
-			margin-right: 15px;
-			// .searchInput {
-			// 	width: 275px;
-			// 	height: 35px;
-			// 	display: flex;
-			// 	border: 1px solid #e5e5e5;
-			// 	background-color: rgb(0, 0, 0);
-			// }
-			.search-input {
-				button {
-					border: none;
-					background-color: transparent;
+		.search-wrapper {
+			margin-right: 10px;
+			.search {
+				.search-btn {
 					height: 100%;
 					padding: 0 6px;
+					border: none;
+					background-color: transparent;
 					cursor: pointer;
 					svg{
 						fill: #fff;
 					}
 				}
-				input {
-					color: #e5e5e5;
-					background-color: transparent;
-					width: 0;
-					height: 100%;
-					font-size: 0.9rem;
-					border: none;
-					&:focus-visible {
-						outline: none;
-					}
-					&::placeholder {
-						color: #8c8c8c;
-						font-size: 0.9rem;
-					}
-				}
+            .search-input{
+               display: flex;
+               align-items: center;
+               background: rgba(0 0 0 / 75%);
+               border: 1px solid rgb(255 255 255 / 85%);
+               .search-icon{
+                  fill: #fff;
+                  padding: 0 6px;
+                  box-sizing: unset;
+               }
+               input{
+                  color: #fff;
+                  background: transparent;
+                  width: 212px;
+                  height: 34px;
+                  padding: 7px 14px 7px 7px;
+                  font-size: 14px;
+                  line-height: 34px;
+                  display: inline-block;
+                  border: none;
+                  outline: none;
+                  box-sizing: border-box;
+                  transition: all .3s;
+                  &::placeholder{
+                     font-family: Arial, Helvetica, sans-serif;
+                     color: rgb(255 255 255 / 50%);
+                  }
+                  &:valid + .icon-close{
+                     visibility: visible;
+                  }
+                  &:invalid + .icon-close{
+                     visibility: hidden;
+                  }
+               }
+               .icon-close{
+                  margin: 0 6px;
+                  cursor: pointer;
+                  svg{
+                     display: block;
+                  }
+               }
+            }
 			}
 		}
 		.notification {
-			margin-right: 15px;
+			margin-right: 10px;
 			margin-top: 0.2em;
 			padding: 2px 6px;
 			svg {
@@ -246,4 +261,110 @@
 	.nav-home{
 		padding: 0 60px;
 	}
+}
+
+@media (min-width: 1330px){
+	.nav-home{
+      .menu-navigation {
+         .navigation-container {
+            .navigation-item {
+               margin-left: 20px;
+            }
+         }
+      }
+		.secondary-navigation{
+         .search-wrapper{
+            margin-right: 15px;
+         }
+         .notification{
+            margin-right: 15px;
+         }
+      }
+	}
+}
+
+@media (min-width: 1200px){
+	.nav-home {
+      .menu-navigation {
+         .logo-icon{
+            margin-right: 25px;
+         }
+         .navigation-container {
+            font-size: 14px;
+            .navigation-item {
+               margin-left: 18px;
+            }
+         }
+      }
+   }
+}
+
+@media (max-width: 950px){
+	.nav-home {
+      .secondary-navigation{
+         .account{
+            .profiles{
+               .arrow-close{
+                  display: none;
+               }
+            }
+         }
+      }
+   }
+}
+
+@media (min-width: 950px){
+	.nav-home {
+      height: 68px;
+      .menu-navigation {
+         .logo-icon {
+            a{
+               font-size: 25px;
+               svg{
+                  height: auto;
+               }
+            }
+         }
+      }
+   }
+}
+
+@media (max-width: 885px){
+	.nav-home {
+      .menu-navigation {
+         .navigation-container {
+            .navigation-item{
+               &:first-child{
+                  display: block;
+                  a{
+                     font-weight: 500;
+                  }
+                  &::after{
+                     content: "";
+                     display: inline-block;
+                     width: 0;
+                     height: 0;
+                     border-width: 5px 5px 0;
+                     border-color: #fff transparent transparent;
+                     border-style: solid;
+                     margin-left: 5px;
+                  }
+               }
+               &:not(:first-child){
+                  display: none;
+               }
+            }
+         }
+      }
+   }
+}
+
+@media (max-width: 400px){
+   .nav-home{
+      .secondary-navigation{
+         .notification{
+            display: none;
+         }
+      }
+   }
 }

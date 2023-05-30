@@ -1,47 +1,104 @@
-import React, { useEffect, useRef } from 'react';
-import { ReactComponent as NesquikLogo } from "../../../../assets/images/nesquik.svg"
+import React, { useEffect, useRef, useState } from 'react';
+import { ReactComponent as NesquikLogo } from "../../../../assets/images/nesquik.svg";
+import { ReactComponent as CloseIcon } from "../../../../assets/images/close-search.svg";
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { homeContext } from '../../../../context/homeContext';
 
 function NavBar() {
-  const navRef = useRef();
+  const [inTop, setInTop] = useState(true);
+  const [searchActive, setSearchActive] = useState(false);
+  const [transitionEnd, setTransitionEnd] = useState(false);
+  const inputRef = useRef();
+  const searchRef = useRef();
+  const navigate = useNavigate();
+  const { search, setSearch } = useContext(homeContext);
 
   useEffect(()=>{
     function transitionNav() {
       window.scrollY !== 0
-      ? navRef.current.style.backgroundColor = "rgb(20 20 20)"
-      : navRef.current.style.backgroundColor = null;
+      ? setInTop(false)
+      : setInTop(true)
     }
 
     document.addEventListener("scroll", transitionNav);
     return () => document.removeEventListener("scroll", transitionNav);
   }, [])
+
+  useEffect(()=>{
+    if (searchActive){
+      setTimeout(() => {
+        inputRef.current.style = null;
+      }, 0);
+      setTimeout(() => {
+        setTransitionEnd(true);
+      }, 300);
+    }
+    
+    function hideInput(e) {
+      if (transitionEnd && search === "" && !searchRef.current.contains(e.target)) {
+        setSearchActive(false);
+        setTransitionEnd(false);
+      }
+    }
+    document.addEventListener("click", hideInput);
+    return () => document.removeEventListener("click", hideInput)
+  }, [searchActive, transitionEnd, search])
   
+  function onSearch(e) {
+    setSearch(e.target.value);
+    if (e.target.value !== ""){
+      setTimeout(() => {
+        navigate("/search");
+      }, 300);
+    } else{
+      navigate("/");
+    }
+  }
+  function closeSearch() {
+    setSearchActive(false);
+    setSearch("");
+    navigate("/");
+  }
 
   return (
-    <nav ref={navRef} className="nav-home">
-      <div className="logo-links">
-        <div className="nav-logo">
-          <a href="home.html">
+    <nav style={inTop ? {} : {backgroundColor: "rgb(20 20 20)"}} className="nav-home">
+      <div className="menu-navigation">
+        <div className="logo-icon">
+          <Link to="/">
             <NesquikLogo/>
-          </a>
+          </Link>
         </div>
-        <div className="nav-links">
-          <ul>
-            <li><a href="home.html">Inicio</a></li>
-            <li><a href="#">Series</a></li>
-            <li><a href="#">Películas</a></li>
-            <li><a href="#">Novedades populares</a></li>
-            <li><a href="#">Mi lista</a></li>
-            <li><a href="#">Explora por idiomas</a></li>
-          </ul>
-        </div>
+        <ul className="navigation-container">
+          <li className="navigation-item"><a href="#">Explorar</a></li>
+          <li className="navigation-item"><a href="#" style={{fontWeight: 500, color: "#fff"}}>Inicio</a></li>
+          <li className="navigation-item"><a href="#">Series</a></li>
+          <li className="navigation-item"><a href="#">Películas</a></li>
+          <li className="navigation-item"><a href="#">Novedades populares</a></li>
+          <li className="navigation-item"><a href="#">Mi lista</a></li>
+          <li className="navigation-item"><a href="#">Explora por idiomas</a></li>
+        </ul>
       </div>
-      <div className="icons">
-        <div className="search">
-          <div className="search-input">
-            <button id="btn" type="submit">
-              <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="search-icon" data-name="Search"><path fillRule="evenodd" clipRule="evenodd" d="M14 11C14 14.3137 11.3137 17 8 17C4.68629 17 2 14.3137 2 11C2 7.68629 4.68629 5 8 5C11.3137 5 14 7.68629 14 11ZM14.3623 15.8506C12.9006 17.7649 10.5945 19 8 19C3.58172 19 0 15.4183 0 11C0 6.58172 3.58172 3 8 3C12.4183 3 16 6.58172 16 11C16 12.1076 15.7749 13.1626 15.368 14.1218L24.0022 19.1352L22.9979 20.8648L14.3623 15.8506Z"></path></svg>
-            </button>
-            <input id="search" type="text" list="peliculas" placeholder="Títulos, personas, géneros"/>
+      <div className="secondary-navigation">
+        <div className="search-wrapper">
+          <div className="search">
+            { searchActive
+              ? <div ref={searchRef} className="search-input">
+                  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="search-icon" data-name="Search"><path fillRule="evenodd" clipRule="evenodd" d="M14 11C14 14.3137 11.3137 17 8 17C4.68629 17 2 14.3137 2 11C2 7.68629 4.68629 5 8 5C11.3137 5 14 7.68629 14 11ZM14.3623 15.8506C12.9006 17.7649 10.5945 19 8 19C3.58172 19 0 15.4183 0 11C0 6.58172 3.58172 3 8 3C12.4183 3 16 6.58172 16 11C16 12.1076 15.7749 13.1626 15.368 14.1218L24.0022 19.1352L22.9979 20.8648L14.3623 15.8506Z"></path></svg>
+                  <input
+                    onChange={onSearch}
+                    style={{width: 0, padding: 0}}
+                    ref={inputRef} type="text"
+                    placeholder="Títulos, personas, géneros" required
+                  />
+                  <span onClick={closeSearch} className="icon-close">
+                    <CloseIcon/>
+                  </span>
+                </div>
+              : <button onClick={()=> setSearchActive(true)} className="search-btn">
+                  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="search-icon" data-name="Search"><path fillRule="evenodd" clipRule="evenodd" d="M14 11C14 14.3137 11.3137 17 8 17C4.68629 17 2 14.3137 2 11C2 7.68629 4.68629 5 8 5C11.3137 5 14 7.68629 14 11ZM14.3623 15.8506C12.9006 17.7649 10.5945 19 8 19C3.58172 19 0 15.4183 0 11C0 6.58172 3.58172 3 8 3C12.4183 3 16 6.58172 16 11C16 12.1076 15.7749 13.1626 15.368 14.1218L24.0022 19.1352L22.9979 20.8648L14.3623 15.8506Z"></path></svg>
+                </button>
+            }
           </div>
         </div>
         <div className="notification">
