@@ -1,22 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import TitleCard from './TitleCard';
-import { detailContext } from '../../../../context/detailContext';
+import { homeContext } from '../../../../context/homeContext';
 import { ReactComponent as PrevArrowICON } from "../../../../assets/images/prev-arrow.svg";
 import { ReactComponent as NextArrowICON } from "../../../../assets/images/next-arrow.svg";
 
 function RowTitlesCard({ section, type, url, id }) {
   const [titles, setTitles] = useState(null);
-  const { setActiveItems, hideModal, isDragged } = useContext(detailContext);
+  const { hideModal, setIsDrag } = useContext(homeContext);
   const [width, setWidth] = useState(window.innerWidth);
   
   useEffect(()=>{
-    fetch(`https://api.themoviedb.org/3/discover/${type}?api_key=4c42277c85a8a8f307d358420965071c${url}`)
-      .then(response => response.json())
-      .then(data =>{
-        setTitles(data.results);
-      })
-      .catch(error => console.log(error))
+    const storedTitles = localStorage.getItem(id);
+    if (storedTitles) {
+      setTitles(JSON.parse(storedTitles));
+    } else{
+      fetch(`https://api.themoviedb.org/3/discover/${type}?api_key=4c42277c85a8a8f307d358420965071c${url}`)
+        .then(response => response.json())
+        .then(data =>{
+          setTitles(data.results);
+          localStorage.setItem(id, JSON.stringify(data.results));
+        })
+        .catch(error => console.log(error))
+    }
   }, [])
 
   let slidesToShow = 6;
@@ -47,7 +53,7 @@ function RowTitlesCard({ section, type, url, id }) {
       <span
         style={currentSlide === 0 ? {opacity: 0, cursor: "default"} : {}}
         className="slider-arrow prev-arrow"
-        onClick={()=> {onClick(); isDragged()}}>
+        onClick={onClick}>
         <PrevArrowICON/>
       </span>
     );
@@ -55,12 +61,11 @@ function RowTitlesCard({ section, type, url, id }) {
 
   function NextArrow(props) {
     const { onClick, slideCount, currentSlide } = props;
-
     return (
       <span
       style={currentSlide !== slideCount - slidesToShow ? {} : {opacity: 0, cursor: "default"}}
       className="slider-arrow next-arrow"
-      onClick={()=> {onClick(); isDragged()}}>
+      onClick={onClick}>
         <NextArrowICON/>
       </span>
     );
@@ -74,7 +79,8 @@ function RowTitlesCard({ section, type, url, id }) {
     slidesToScroll: 6,
     prevArrow: <PrevArrow/>,
     nextArrow: <NextArrow/>,
-    beforeChange: () => hideModal(),
+    beforeChange: () => {hideModal(); setIsDrag(prev => !prev)},
+    afterChange: () => setIsDrag(prev => !prev),
     appendDots: dots => (
       <ul className="slick-dots"> {dots} </ul>
     ),
@@ -132,7 +138,6 @@ function RowTitlesCard({ section, type, url, id }) {
               key={index}
               type={type}
               title={title}
-              id={id}
             />
           )})
         }

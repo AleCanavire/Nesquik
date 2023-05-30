@@ -1,3 +1,4 @@
+@import "./scss/Base";
 @import "./scss/Fonts";
 
 *{
@@ -7,13 +8,6 @@
    line-height: 1.2;
    box-sizing: border-box;
 }
-html{
-   font-size: .75vw;
-}
-body{
-   background: #141414;
-   min-height: 101vh;
-}
 
 @import "./pages/home/components/NavBar/NavBar";
 @import "./pages/home/components/Header/Header";
@@ -22,3 +16,4 @@ body{
 @import "./pages/home/components/TitleDetail/MoreLikeThis";
 @import "./pages/home/components/SliderTitles/RowTitlesCard";
 @import "./pages/home/components/MiniTitleDetail/MiniTitleDetail";
+@import "./pages/search/Search";

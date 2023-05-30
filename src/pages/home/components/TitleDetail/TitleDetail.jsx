@@ -10,7 +10,7 @@ import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-
 import { ReactComponent as ThumbsWayUpRated } from "../../../../assets/images/thumbs-way-up-rated.svg";
 import EpisodesContainer from './EpisodesContainer';
 import MoreLikeThis from './MoreLikeThis';
-import { detailContext } from '../../../../context/detailContext';
+import { homeContext } from '../../../../context/homeContext';
 
 function TitleDetail() {
   const [showDetail, setShowDetail] = useState(false);
@@ -22,7 +22,7 @@ function TitleDetail() {
   const [cast, setCast] = useState(null);
   const [crew, setCrew] = useState(null);
   const [genres, setGenres] = useState(null);
-  const { infoTitle, closeDetail } = useContext(detailContext);
+  const { infoTitle, closeDetail } = useContext(homeContext);
 
   useEffect(()=>{
     setShowDetail(true);

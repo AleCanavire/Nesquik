@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { detailContext } from '../../../../context/detailContext';
+import { homeContext } from '../../../../context/homeContext';
 import { ReactComponent as AddToMyList } from "../../../../assets/images/add.svg";
 import { ReactComponent as ThumbsUp } from "../../../../assets/images/thumbs-up.svg";
 import { ReactComponent as ThumbsDown } from "../../../../assets/images/thumbs-down.svg";
@@ -8,7 +8,7 @@ import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-
 import usePlayerActions from '../../../../hooks/usePlayerActions';
 
 function MiniTitleDetail() {
-  const { miniModal, showMiniModal, setShowMiniModal, position, itemPosition, hideModal, setInfoTitle } = useContext(detailContext);
+  const { miniModal, showMiniModal, setShowMiniModal, position, itemPosition, hideModal, setInfoTitle } = useContext(homeContext);
   const {isMuted, isPlaying, isEnded, trailerDuration, showTrailer, actionButton, hidePlayer, endedTrailer, setShowTrailer } = usePlayerActions();
   const [year, setYear] = useState(null);
   const [duration, setDuration] = useState(null);
@@ -37,12 +37,16 @@ function MiniTitleDetail() {
   const positionDetail = {
     position: "absolute",
     top: position.top + window.scrollY,
-    left: itemPosition === "left" ? position.left : itemPosition === "right" ? position.left - (position.width / 2) : position.left - (position.width / 4),
+    left: itemPosition === "left" ? position.left
+        : itemPosition === "right" ? position.left - (position.width / 2)
+        : position.left - (position.width / 4),
     width: position.width * 1.5,
-    transformOrigin: itemPosition === "left" ? "top left" : itemPosition === "right" ? "top right" : "top center",
+    transformOrigin:  itemPosition === "left" ? "top left"
+                    : itemPosition === "right" ? "top right"
+                    : "top center",
     transform: showMiniModal ? `translateY(calc(${position.height / 2}px - 50%))` : "scale(.665)",
     boxShadow: showMiniModal ? "rgba(0 0 0 / 75%) 0px 3px 10px": "",
-    transition: "transform .3s, box-shadow .3s"
+    transition: "transform .2s, box-shadow .2s"
   }
   
   return (
@@ -52,7 +56,7 @@ function MiniTitleDetail() {
           { miniModal?.video?.key &&
             <ReactPlayer
               className="title-player"
-              style={miniModal.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.25)"}}
+              style={miniModal.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.3)"}}
               url={`https://www.youtube.com/watch?v=${miniModal.video.key}`}
               width="100%"
               height="100%"
@@ -61,6 +65,11 @@ function MiniTitleDetail() {
               onProgress={e => hidePlayer(e, trailerDuration.current)}
               onDuration={e => trailerDuration.current = e}
               onEnded={endedTrailer}
+              config={{
+                youtube: {
+                  playerVars: { iv_load_policy: 3, rel: 0, showInfo: 0 }
+                }
+              }}
             />
           }
           <div className="title-logo-and-toggle">
@@ -131,7 +140,7 @@ function MiniTitleDetail() {
               <svg viewBox="0 0 58.07 24" className="svg-icon svg-icon-audio-description"><path fill="#fff" d="M18.34,10.7v7.62l-4.73,0ZM.5,26.6h8l2.17-3,7.49,0s0,2.08,0,3.06h5.7V2.77H17C16.3,3.79.5,26.6.5,26.6Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M30.63,8.91c3.6-.13,6.1,1.8,6.48,4.9.5,4.15-2.43,6.85-6.66,6.56V9.19A.26.26,0,0,1,30.63,8.91ZM25,3V26.56c5.78.11,10.22.32,13.49-1.85a12.2,12.2,0,0,0,5.14-11.36A11.52,11.52,0,0,0,33.38,2.72c-2.76-.23-8.25,0-8.25,0A.66.66,0,0,0,25,3Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M43.72,3.43c1.45-.4,1.88,1.2,2.51,2.31a18.73,18.73,0,0,1-1.42,20.6h-.92a1.86,1.86,0,0,1,.42-1.11,21.39,21.39,0,0,0,2.76-10.16A22.54,22.54,0,0,0,43.72,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M48.66,3.43c1.43-.4,1.87,1.2,2.5,2.31a18.83,18.83,0,0,1-1.42,20.6h-.91c-.07-.42.24-.79.41-1.11A21.39,21.39,0,0,0,52,15.07,22.63,22.63,0,0,0,48.66,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M53.57,3.43c1.46-.4,1.9,1.2,2.54,2.31a18.58,18.58,0,0,1-1.44,20.6h-.93c-.07-.42.24-.79.42-1.11A21,21,0,0,0,57,15.07,22.26,22.26,0,0,0,53.57,3.43Z" transform="translate(-0.5 -2.62)"></path></svg>
             </div>
             <div className="metadata-tags">
-            {miniModal.genres.map((genre, index) => {
+            {miniModal.genres.slice(0, 3).map((genre, index) => {
               return(
                 index !== 0
                   ? <React.Fragment key={index}>

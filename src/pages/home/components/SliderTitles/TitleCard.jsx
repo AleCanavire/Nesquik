@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { detailContext } from '../../../../context/detailContext';
+import { homeContext } from '../../../../context/homeContext';
 import { useGetCredits, useGetLogos, useGetTitle, useGetVideo } from '../../../../hooks/GetInfoTitle';
 
-function TitleCard({ type, title, id }) {
-  const { showModal, isDrag } = useContext(detailContext);
+function TitleCard({ type, title }) {
+  const { showModal, isDrag, search } = useContext(homeContext);
   const [backdrop, setBackdrop] = useState(null);
   const [itemPosition, setItemPosition] = useState();
   const cardRef = useRef();
   const isOver = useRef(null);
+  const isFirstRender = useRef(true);
 
   const titleData = useGetTitle(type, title?.id);
   const video = useGetVideo(type, title?.id);
@@ -19,24 +20,28 @@ function TitleCard({ type, title, id }) {
       .then(response => response.json())
       .then(data => {
         const backdropTitle = data.backdrops.find(backdrop => backdrop.iso_639_1 === "es") ||
-        data.backdrops.find(backdrop => backdrop.iso_639_1 === "en") ||
-        data.backdrops.find(backdrop => backdrop.iso_639_1)          ||
-        data.backdrops.find(backdrop => backdrop)
+                              data.backdrops.find(backdrop => backdrop.iso_639_1 === "en") ||
+                              data.backdrops.find(backdrop => backdrop.iso_639_1)          ||
+                              data.backdrops.find(backdrop => backdrop)
         setBackdrop(backdropTitle);
       })
   }, [])
   
   useEffect(()=>{
-    const titlesActive = document.querySelectorAll(`#${id}>.slick-slider>.slick-list>.slick-track>.slick-slide.slick-active>div>.title-card`);
-    const lastItem = titlesActive.length - 1;
-    if (cardRef.current === titlesActive[0]) {
+    const position = cardRef.current.getBoundingClientRect();
+    const positionRight = window.innerWidth - (position.left + position.width);
+    if (position.left < window.innerWidth * 0.05) {
       setItemPosition("left");
-    } else if (cardRef.current === titlesActive[lastItem]) {
+    } else if (positionRight < window.innerWidth * 0.05) {
       setItemPosition("right");
     } else {
       setItemPosition("center");
     }
-  }, [isDrag])
+
+    if (isFirstRender.current){
+      isFirstRender.current = false;
+    }
+  }, [isDrag, isFirstRender.current, search])
 
   function onShowModal() {
     isOver.current =  setTimeout(() => {
@@ -48,17 +53,18 @@ function TitleCard({ type, title, id }) {
   }
 
   return (
-    <div ref={cardRef} className="title-card">
-      <div className="card-background"/>
-      { backdrop?.file_path &&
-        <img
-          src={`https://image.tmdb.org/t/p/w780${backdrop?.file_path}`}
-          alt={title.name}
-          loading="lazy"
-          onMouseOver={onShowModal}
-          onMouseLeave={onHideModal}
-        />
-      }
+    <div className="title-card-wrapper">
+      <div ref={cardRef} className="title-card">
+        { backdrop?.file_path &&
+          <img
+            src={`https://image.tmdb.org/t/p/w780${backdrop.file_path}`}
+            alt={title.name}
+            loading="lazy"
+            onMouseOver={onShowModal}
+            onMouseLeave={onHideModal}
+          />
+        }
+      </div>
     </div>
   )
 }

@@ -85,20 +85,20 @@ export function useGetTrending() {
   const [title, setTitle] = useState(null);
 
   useEffect(()=>{
-    const random = Math.trunc(Math.random() * 2) + 1;
-    const url = random === 1
+    const randomNumber = Math.trunc(Math.random() * 2) + 1;
+    const url = randomNumber === 1
                 ? "https://api.themoviedb.org/3/discover/tv?api_key=4c42277c85a8a8f307d358420965071c&with_networks=213&language=es-MX"
-                : "https://api.themoviedb.org/3/discover/movie?api_key=4c42277c85a8a8f307d358420965071c&with_watch_providers=8&watch_region=US&language=es-MX";
+                : "https://api.themoviedb.org/3/discover/movie?api_key=4c42277c85a8a8f307d358420965071c&with_watch_providers=8&watch_region=AR&language=es-MX";
     fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const number = Math.trunc(Math.random() * 20);
-        const randomTitle = data.results[number];
-        const type = random === 1 ? "tv" : "movie"
-        setTitle({...randomTitle, type: type});
+    .then(response => response.json())
+    .then(data => {
+      const randomTitle = Math.trunc(Math.random() * 20);
+      const titleSelected = data.results[randomTitle];
+        const type = randomNumber === 1 ? "tv" : "movie";
+        setTitle({...titleSelected, type: type});
       })
       .catch((error) => console.log(error));
   }, [])
-  
+
   return title
 }

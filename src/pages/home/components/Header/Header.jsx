@@ -8,15 +8,15 @@ import {
   useGetCredits
 } from '../../../../hooks/GetInfoTitle';
 import usePlayerActions from '../../../../hooks/usePlayerActions';
-import { detailContext } from '../../../../context/detailContext';
+import { homeContext } from '../../../../context/homeContext';
 
 function Header() {
-  const { infoTitle, miniModal, onAddInfo } = useContext(detailContext);
-  const randomTitle = useGetTrending();
+  const { infoTitle, miniModal, onAddInfo } = useContext(homeContext);
   const [titleHeader, setTitleHeader] = useState(null);
+  const randomTitle = useGetTrending();
   const [translate, setTranslate] = useState(0);
   const { isMuted, isPlaying, showTrailer, trailerDuration, isEnded,
-          setIsPlaying, actionButton, hidePlayer,  endedTrailer } = usePlayerActions();
+          setIsPlaying, actionButton, hidePlayer, endedTrailer } = usePlayerActions();
   const overviewRef = useRef();
 
   const title = useGetTitle(titleHeader?.type, titleHeader?.id);
@@ -25,18 +25,21 @@ function Header() {
   const credits = useGetCredits(titleHeader?.type, titleHeader?.id);
 
   useEffect(()=>{
-    !titleHeader && setTitleHeader(randomTitle);
+    const storedHeader = localStorage.getItem("title-header");
+    if (randomTitle && !titleHeader && storedHeader === null) {
+      setTitleHeader(randomTitle);
+      localStorage.setItem("title-header", JSON.stringify(randomTitle))
+    } else if (!titleHeader && storedHeader !== null) {
+      setTitleHeader(JSON.parse(storedHeader));
+    }
 
     if (title?.overview) {
-      const translateLogo = Math.round(3.2 * window.innerWidth / 100) + overviewRef.current.clientHeight;
-      setTranslate(translateLogo);
+      setTranslate(overviewRef.current.clientHeight);
     }
   }, [randomTitle, title])
 
   useEffect(()=>{
-    if (infoTitle && !isEnded) {
-      setIsPlaying(false);
-    } else if (miniModal && !isEnded) {
+    if ((infoTitle || miniModal) && !isEnded) {
       setIsPlaying(false);
     } else if (!infoTitle && !isEnded) {
       setIsPlaying(true)
@@ -47,23 +50,25 @@ function Header() {
     <header className="header-title-container">
       <div className="header-title">
         <div className="header-media">
-          <ReactPlayer
-            style={titleHeader?.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.3)"}}
-            className="header-trailer"
-            url={`https://www.youtube.com/watch?v=${video?.key}`}
-            width="100%"
-            height="100%"
-            muted={isMuted}
-            playing={isPlaying}
-            onProgress={e => hidePlayer(e, trailerDuration.current)}
-            onDuration={e => trailerDuration.current = e}
-            onEnded={endedTrailer}
-          />
+          { video &&
+            <ReactPlayer
+              style={titleHeader.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.3)"}}
+              className="header-trailer"
+              url={`https://www.youtube.com/watch?v=${video?.key}`}
+              width="100%"
+              height="100%"
+              muted={isMuted}
+              playing={isPlaying}
+              onProgress={e => hidePlayer(e, trailerDuration.current)}
+              onDuration={e => trailerDuration.current = e}
+              onEnded={endedTrailer}
+            />
+          }
           {title &&
             <img
               className="header-backdrop"
               style={showTrailer ? {opacity: "0"} : {}}
-              src={`https://image.tmdb.org/t/p/original${title.backdrop_path}`}
+              src={`https://image.tmdb.org/t/p/${window.innerWidth > 1280 ? "original" : "w1280"}${title.backdrop_path}`}
               alt={title.title}
             />
           }
@@ -71,8 +76,8 @@ function Header() {
 
         <div className="header-content">
           <div className="header-info">
-            {logo &&
-              <div style={showTrailer ? {transform: `scale(0.6) translate3d(0, ${translate}px, 0)`} : {}} className="header-logo-wrapper">
+            { logo &&
+              <div style={showTrailer ? {transform: `translateY(${translate}px) scale(0.6)`} : {}} className="header-logo-wrapper">
                 <div className="header-billboard-logo">
                   <img
                     className="header-logo"
@@ -82,7 +87,7 @@ function Header() {
                 </div>
               </div>
             }
-            {title?.overview &&
+            { title?.overview &&
               <p ref={overviewRef} style={showTrailer ? {transform: `translateY(100%)`, opacity: "0"} : {}} className="header-overview">
                 {title.overview}
               </p>}

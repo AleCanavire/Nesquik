@@ -28,8 +28,8 @@
             }
             .title-card-image{
                position: relative;
-               aspect-ratio: 16/9;
-               &::before{
+               padding-top: 56.3925%;
+               &::after{
                   content: "";
                   position: absolute;
                   top: 0;
@@ -42,8 +42,11 @@
                                     );
                }
                img{
-                  display: block;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
                   width: 100%;
+                  height: 100%;
                }
                .title-play-icon{
                   position: absolute;
@@ -72,6 +75,7 @@
                   right: 5%;
                   font-size: 16px;
                   white-space: nowrap;
+                  z-index: 1;
                }
             }
             .title-card-metadata-container{

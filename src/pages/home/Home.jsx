@@ -1,38 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react'
-import NavBar from './components/NavBar/NavBar'
-import Header from './components/Header/Header'
-import TitleDetail from './components/TitleDetail/TitleDetail';
+import React, { useEffect, useState } from 'react'
+import Header from './components/Header/Header';
 import RowTitlesCard from './components/SliderTitles/RowTitlesCard';
-import { detailContext } from '../../context/detailContext';
-import MiniTitleDetail from './components/MiniTitleDetail/MiniTitleDetail';
+import { useContext } from 'react';
+import { homeContext } from '../../context/homeContext';
 
 function Home() {
-  const { infoTitle, miniModal } = useContext(detailContext);
+  const { search } = useContext(homeContext);
+  const [transition, setTransition] = useState(false);
 
   useEffect(()=>{
-    if (infoTitle) {
-      const titleName = infoTitle.title || infoTitle.original_title || infoTitle.name || infoTitle.original_name;
-      document.title = `${titleName} — Netflix`
-    } else {
-      document.title = "Home — Netflix"
+    if (search) {
+      setTimeout(() => {
+        setTransition(true)
+      }, 0);
     }
-  }, [infoTitle])
+  }, [search]);
 
   return (
     <>
-      <NavBar/>
       <Header/>
       <main>
         <RowTitlesCard
           section={"Agregados recientemente"}
           type={"tv"}
-          url={"&with_networks=213&sort_by=first_air_date.desc&page=4"}
+          url={"&with_watch_providers=8&watch_region=AR&sort_by=first_air_date.desc&page=2"}
           id={"latest-titles"}
         />
         <RowTitlesCard
           section={"Tendencias"}
           type={"tv"}
-          url={"&with_networks=213"}
+          url={"&with_watch_providers=8&watch_region=AR"}
           id={"trends-titles"}
         />
         <RowTitlesCard
@@ -72,11 +69,19 @@ function Home() {
           id={"eeuu-series"}
         />
       </main>
-      {miniModal &&
-        <MiniTitleDetail/>
-      }
-      {infoTitle &&
-        <TitleDetail/>
+      { search && 
+        <div
+          style={{
+            background: "rgb(20, 20, 20)",
+            position: "absolute",
+            top: 0,
+            width: "100%",
+            height: "100%",
+            opacity: transition ? 1 : 0,
+            transition: "opacity .3s ease-out",
+            zIndex: 15
+          }}
+        />
       }
     </>
   )
