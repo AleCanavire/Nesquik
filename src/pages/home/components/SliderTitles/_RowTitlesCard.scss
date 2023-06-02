@@ -128,15 +128,24 @@ main{
    width: 100%;
    height: 0;
    padding: 28.125% 0;
-   border-radius: .2vw;
+   border-radius: 0.2vw;
    overflow: hidden;
-   img{
+   cursor: pointer;
+   .title-backdrop{
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      cursor: pointer;
+   }
+   .title-logo{
+      position: absolute;
+      left: 5%;
+      bottom: 5%;
+      width: 45%;
+      max-height: 50%;
+      object-fit: contain;
+      object-position: bottom left;
    }
 }
 

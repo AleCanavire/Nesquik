@@ -4,10 +4,11 @@ import TitleCard from './TitleCard';
 import { homeContext } from '../../../../context/homeContext';
 import { ReactComponent as PrevArrowICON } from "../../../../assets/images/prev-arrow.svg";
 import { ReactComponent as NextArrowICON } from "../../../../assets/images/next-arrow.svg";
+import TitleCardSkeleton from './TitleCardSkeleton';
 
-function RowTitlesCard({ section, type, url, id }) {
+function RowTitlesCard({ type, url, id }) {
   const [titles, setTitles] = useState(null);
-  const { hideModal, setIsDrag } = useContext(homeContext);
+  const { hideModal } = useContext(homeContext);
   const [width, setWidth] = useState(window.innerWidth);
   
   useEffect(()=>{
@@ -18,14 +19,16 @@ function RowTitlesCard({ section, type, url, id }) {
       fetch(`https://api.themoviedb.org/3/discover/${type}?api_key=4c42277c85a8a8f307d358420965071c${url}`)
         .then(response => response.json())
         .then(data =>{
-          setTitles(data.results);
+          setTimeout(()=>{
+            setTitles(data.results);
+          }, 3600)
           localStorage.setItem(id, JSON.stringify(data.results));
         })
         .catch(error => console.log(error))
     }
   }, [])
 
-  let slidesToShow = 6;
+  let slidesToShow;
   
   if (width <= 500) {
     slidesToShow = 2;
@@ -77,10 +80,10 @@ function RowTitlesCard({ section, type, url, id }) {
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 6,
+    initialSlide: 0,
     prevArrow: <PrevArrow/>,
     nextArrow: <NextArrow/>,
-    beforeChange: () => {hideModal(); setIsDrag(prev => !prev)},
-    afterChange: () => setIsDrag(prev => !prev),
+    beforeChange: () => {hideModal()},
     appendDots: dots => (
       <ul className="slick-dots"> {dots} </ul>
     ),
@@ -120,29 +123,22 @@ function RowTitlesCard({ section, type, url, id }) {
   };
 
   return (
-    <div id={id} className="row-title-card">
-      <h2 className="row-title-header">
-        <a className="row-title" href="#">
-          <div className="title">
-            {section}
-          </div>
-          <div className="more-visible">
-            <div className="see-all">Explorar todos</div>
-          </div>
-        </a>
-      </h2>
-      <Slider {...settings}>
-        { titles?.map((title, index) => {
-          return(
-            <TitleCard
-              key={index}
-              type={type}
-              title={title}
-            />
-          )})
-        }
-      </Slider>
-    </div>
+    <>
+      { titles
+        ? <Slider {...settings}>
+            { titles.map((title, index) => {
+              return(
+                <TitleCard
+                  key={index}
+                  type={type}
+                  title={title}
+                />
+              )})
+            }
+          </Slider>
+        : <TitleCardSkeleton/>
+      }
+    </>
   )
 }
 
