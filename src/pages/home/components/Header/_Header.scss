@@ -50,7 +50,6 @@
                      max-height: 14.5vw;
                      object-fit: contain;
                      object-position: bottom left;
-                     filter: drop-shadow(.2vw .2vw .5vw rgb(0 0 0 / 30%));
                   }
                }
             }
@@ -160,7 +159,18 @@
             }
          }
       }
-      .gradient {
+      .trailer-vignette{
+         background: linear-gradient(77deg,rgb(0 0 0 / 60%), transparent 85%);
+         position: absolute;
+         top: 0;
+         left: 0;
+         right: 26.09%;
+         bottom: 0;
+         opacity: 1;
+         transition: opacity .5s;
+         z-index: 3;
+      }
+      .hero-vignette {
          background-image: linear-gradient(
             180deg,
             hsla(0, 0%, 8%, 0) 0,
