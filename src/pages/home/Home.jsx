@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Header from './components/Header/Header';
-import RowTitlesCard from './components/SliderTitles/RowTitlesCard';
 import { useContext } from 'react';
 import { homeContext } from '../../context/homeContext';
+import LazyRowTitles from './components/SliderTitles/LazyRowTitles';
 
 function Home() {
   const { search } = useContext(homeContext);
@@ -20,49 +20,49 @@ function Home() {
     <>
       <Header/>
       <main>
-        <RowTitlesCard
+        <LazyRowTitles
           section={"Agregados recientemente"}
           type={"tv"}
           url={"&with_watch_providers=8&watch_region=AR&sort_by=first_air_date.desc&page=2"}
           id={"latest-titles"}
         />
-        <RowTitlesCard
+        <LazyRowTitles
           section={"Tendencias"}
           type={"tv"}
           url={"&with_watch_providers=8&watch_region=AR"}
           id={"trends-titles"}
         />
-        <RowTitlesCard
+        <LazyRowTitles
           section={"Películas de acción"}
           type={"movie"}
           url={"&with_genres=28&with_watch_providers=8&watch_region=AR"}
           id={"action-movies"}
         />
-        <RowTitlesCard
+        <LazyRowTitles
           section={"Series dramáticas coreanas"}
           type={"tv"}
           url={"&with_genres=18&with_watch_providers=8&watch_region=AR&with_original_language=ko&page=2"}
           id={"korean-series"}
         />
-        <RowTitlesCard
+        <LazyRowTitles
           section={"Dramas"}
           type={"movie"}
           url={"&with_genres=18&with_watch_providers=8&watch_region=AR"}
           id={"drama-movies"}
         />
-        <RowTitlesCard
+        <LazyRowTitles
           section={"Animación"}
           type={"tv"}
           url={"&with_genres=16&with_watch_providers=8&watch_region=AR&page=4"}
           id={"animation-series"}
         />
-        <RowTitlesCard
+        <LazyRowTitles
           section={"Películas de terror"}
           type={"movie"}
           url={"&with_genres=27&with_watch_providers=8&watch_region=AR"}
           id={"horror-movies"}
         />
-        <RowTitlesCard
+        <LazyRowTitles
           section={"Series de EE.UU."}
           type={"tv"}
           url={"&with_origin_country=US&with_watch_providers=8&watch_region=AR&page=2"}
