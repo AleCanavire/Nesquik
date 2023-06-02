@@ -34,15 +34,25 @@ function MiniTitleDetail() {
     }
   }, [miniModal])
 
+  let positionInWindow;
+  const positionRight = window.innerWidth - (position.left + position.width);
+  if (position.left < window.innerWidth * 0.05) {
+    positionInWindow = "left";
+  } else if (positionRight < window.innerWidth * 0.05) {
+    positionInWindow = "right";
+  } else {
+    positionInWindow = "center";
+  }
+
   const positionDetail = {
     position: "absolute",
     top: position.top + window.scrollY,
-    left: itemPosition === "left" ? position.left
-        : itemPosition === "right" ? position.left - (position.width / 2)
+    left: positionInWindow === "left" ? position.left
+        : positionInWindow === "right" ? position.left - (position.width / 2)
         : position.left - (position.width / 4),
     width: position.width * 1.5,
-    transformOrigin:  itemPosition === "left" ? "top left"
-                    : itemPosition === "right" ? "top right"
+    transformOrigin:  positionInWindow === "left" ? "top left"
+                    : positionInWindow === "right" ? "top right"
                     : "top center",
     transform: showMiniModal ? `translateY(calc(${position.height / 2}px - 50%))` : "scale(.665)",
     boxShadow: showMiniModal ? "rgba(0 0 0 / 75%) 0px 3px 10px": "",

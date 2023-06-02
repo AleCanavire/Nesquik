@@ -7,8 +7,6 @@ export function HomeContextProvider({ children }) {
   const [miniModal, setMiniModal] = useState(null);
   const [showMiniModal, setShowMiniModal] = useState(false);
   const [position, setPosition] = useState(null);
-  const [itemPosition, setItemPosition] = useState();
-  const [isDrag, setIsDrag] = useState(false);
   const [search, setSearch] = useState("");
 
   function onAddInfo(title, logo, video, credits, backdrop) {
@@ -36,10 +34,9 @@ export function HomeContextProvider({ children }) {
     setInfoTitle(null);
   }
 
-  function showModal(title, logo, backdrop, video, credits, position, itemPosition) {
+  function showModal(title, logo, backdrop, video, credits, position) {
     onAddMiniInfo(title, logo, video, backdrop, credits);
     setPosition(position);
-    setItemPosition(itemPosition);
   }
   
   function hideModal() {
@@ -51,8 +48,8 @@ export function HomeContextProvider({ children }) {
 
   return(
 		<homeContext.Provider
-    value={{  infoTitle, miniModal, showMiniModal, position, itemPosition, isDrag, search,
-              onAddInfo, onAddMiniInfo, closeDetail, showModal, hideModal, setShowMiniModal, setInfoTitle, setIsDrag, setSearch }}>
+    value={{  infoTitle, miniModal, showMiniModal, position, search,
+              onAddInfo, onAddMiniInfo, closeDetail, showModal, hideModal, setShowMiniModal, setInfoTitle, setSearch }}>
 			{ children }
 		</homeContext.Provider>
 	)

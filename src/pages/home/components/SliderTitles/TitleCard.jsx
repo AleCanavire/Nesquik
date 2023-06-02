@@ -3,12 +3,10 @@ import { homeContext } from '../../../../context/homeContext';
 import { useGetCredits, useGetLogos, useGetTitle, useGetVideo } from '../../../../hooks/GetInfoTitle';
 
 function TitleCard({ type, title }) {
-  const { showModal, isDrag, search } = useContext(homeContext);
+  const { showModal } = useContext(homeContext);
   const [backdrop, setBackdrop] = useState(null);
-  const [itemPosition, setItemPosition] = useState();
   const cardRef = useRef();
   const isOver = useRef(null);
-  const isFirstRender = useRef(true);
 
   const titleData = useGetTitle(type, title?.id);
   const video = useGetVideo(type, title?.id);
@@ -21,31 +19,16 @@ function TitleCard({ type, title }) {
       .then(data => {
         const backdropTitle = data.backdrops.find(backdrop => backdrop.iso_639_1 === "es") ||
                               data.backdrops.find(backdrop => backdrop.iso_639_1 === "en") ||
-                              data.backdrops.find(backdrop => backdrop.iso_639_1)          ||
+                              data.backdrops.find(backdrop => backdrop.iso_639_1 === "ko") ||
+                              data.backdrops.find(backdrop => !backdrop.iso_639_1)         ||
                               data.backdrops.find(backdrop => backdrop)
         setBackdrop(backdropTitle);
       })
   }, [])
-  
-  useEffect(()=>{
-    const position = cardRef.current.getBoundingClientRect();
-    const positionRight = window.innerWidth - (position.left + position.width);
-    if (position.left < window.innerWidth * 0.05) {
-      setItemPosition("left");
-    } else if (positionRight < window.innerWidth * 0.05) {
-      setItemPosition("right");
-    } else {
-      setItemPosition("center");
-    }
-
-    if (isFirstRender.current){
-      isFirstRender.current = false;
-    }
-  }, [isDrag, isFirstRender.current, search])
 
   function onShowModal() {
     isOver.current =  setTimeout(() => {
-                        showModal(titleData, logo, backdrop, video, credits, cardRef.current.getBoundingClientRect(), itemPosition);
+                        showModal(titleData, logo, backdrop, video, credits, cardRef.current.getBoundingClientRect());
                       }, 500)
   }
   function onHideModal() {
@@ -57,11 +40,20 @@ function TitleCard({ type, title }) {
       <div ref={cardRef} className="title-card">
         { backdrop?.file_path &&
           <img
+            className="title-backdrop"
             src={`https://image.tmdb.org/t/p/w780${backdrop.file_path}`}
             alt={title.name}
             loading="lazy"
             onMouseOver={onShowModal}
             onMouseLeave={onHideModal}
+          />
+        }
+        { (!backdrop?.iso_639_1 && logo?.file_path) &&
+          <img
+            className="title-logo"
+            src={`https://image.tmdb.org/t/p/w185${logo?.file_path}`}
+            alt={title.name}
+            loading="lazy"
           />
         }
       </div>
