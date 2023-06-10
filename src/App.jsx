@@ -23,11 +23,13 @@ function App() {
 
   return (
     <BrowserRouter>
+      <div className="home-container">
       <NavBar/>
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/search" element={<Search/>} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/search" element={<Search/>} />
+        </Routes>
+      </div>
       {miniModal &&
         <MiniTitleDetail/>
       }

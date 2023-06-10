@@ -1,18 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as NesquikLogo } from "../../../../assets/images/nesquik.svg";
-import { ReactComponent as CloseIcon } from "../../../../assets/images/close-search.svg";
-import { Link, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { homeContext } from '../../../../context/homeContext';
+import { Link } from 'react-router-dom';
+import SearchInput from './SearchInput';
 
 function NavBar() {
   const [inTop, setInTop] = useState(true);
   const [searchActive, setSearchActive] = useState(false);
-  const [transitionEnd, setTransitionEnd] = useState(false);
-  const inputRef = useRef();
-  const searchRef = useRef();
-  const navigate = useNavigate();
-  const { search, setSearch } = useContext(homeContext);
 
   useEffect(()=>{
     function transitionNav() {
@@ -24,42 +17,6 @@ function NavBar() {
     document.addEventListener("scroll", transitionNav);
     return () => document.removeEventListener("scroll", transitionNav);
   }, [])
-
-  useEffect(()=>{
-    if (searchActive){
-      setTimeout(() => {
-        inputRef.current.style = null;
-      }, 0);
-      setTimeout(() => {
-        setTransitionEnd(true);
-      }, 300);
-    }
-    
-    function hideInput(e) {
-      if (transitionEnd && search === "" && !searchRef.current.contains(e.target)) {
-        setSearchActive(false);
-        setTransitionEnd(false);
-      }
-    }
-    document.addEventListener("click", hideInput);
-    return () => document.removeEventListener("click", hideInput)
-  }, [searchActive, transitionEnd, search])
-  
-  function onSearch(e) {
-    setSearch(e.target.value);
-    if (e.target.value !== ""){
-      setTimeout(() => {
-        navigate("/search");
-      }, 300);
-    } else{
-      navigate("/");
-    }
-  }
-  function closeSearch() {
-    setSearchActive(false);
-    setSearch("");
-    navigate("/");
-  }
 
   return (
     <nav style={inTop ? {} : {backgroundColor: "rgb(20 20 20)"}} className="nav-home">
@@ -83,19 +40,8 @@ function NavBar() {
         <div className="search-wrapper">
           <div className="search">
             { searchActive
-              ? <div ref={searchRef} className="search-input">
-                  <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="search-icon" data-name="Search"><path fillRule="evenodd" clipRule="evenodd" d="M14 11C14 14.3137 11.3137 17 8 17C4.68629 17 2 14.3137 2 11C2 7.68629 4.68629 5 8 5C11.3137 5 14 7.68629 14 11ZM14.3623 15.8506C12.9006 17.7649 10.5945 19 8 19C3.58172 19 0 15.4183 0 11C0 6.58172 3.58172 3 8 3C12.4183 3 16 6.58172 16 11C16 12.1076 15.7749 13.1626 15.368 14.1218L24.0022 19.1352L22.9979 20.8648L14.3623 15.8506Z"></path></svg>
-                  <input
-                    onChange={onSearch}
-                    style={{width: 0, padding: 0}}
-                    ref={inputRef} type="text"
-                    placeholder="Títulos, personas, géneros" required
-                  />
-                  <span onClick={closeSearch} className="icon-close">
-                    <CloseIcon/>
-                  </span>
-                </div>
-              : <button onClick={()=> setSearchActive(true)} className="search-btn">
+              ? <SearchInput showInput={setSearchActive} />
+              : <button onClick={() => setSearchActive(true)} className="search-btn">
                   <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="search-icon" data-name="Search"><path fillRule="evenodd" clipRule="evenodd" d="M14 11C14 14.3137 11.3137 17 8 17C4.68629 17 2 14.3137 2 11C2 7.68629 4.68629 5 8 5C11.3137 5 14 7.68629 14 11ZM14.3623 15.8506C12.9006 17.7649 10.5945 19 8 19C3.58172 19 0 15.4183 0 11C0 6.58172 3.58172 3 8 3C12.4183 3 16 6.58172 16 11C16 12.1076 15.7749 13.1626 15.368 14.1218L24.0022 19.1352L22.9979 20.8648L14.3623 15.8506Z"></path></svg>
                 </button>
             }

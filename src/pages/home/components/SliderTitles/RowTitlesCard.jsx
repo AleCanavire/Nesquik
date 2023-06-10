@@ -12,7 +12,7 @@ function RowTitlesCard({ type, url, id }) {
   const [width, setWidth] = useState(window.innerWidth);
   
   useEffect(()=>{
-    const storedTitles = localStorage.getItem(id);
+    const storedTitles = sessionStorage.getItem(id);
     if (storedTitles) {
       setTitles(JSON.parse(storedTitles));
     } else{
@@ -22,7 +22,7 @@ function RowTitlesCard({ type, url, id }) {
           setTimeout(()=>{
             setTitles(data.results);
           }, 3600)
-          localStorage.setItem(id, JSON.stringify(data.results));
+          sessionStorage.setItem(id, JSON.stringify(data.results));
         })
         .catch(error => console.log(error))
     }
@@ -54,7 +54,7 @@ function RowTitlesCard({ type, url, id }) {
     const { onClick, currentSlide } = props;
     return (
       <span
-        style={currentSlide === 0 ? {opacity: 0, cursor: "default"} : {}}
+        style={currentSlide === 0 ? {visibility: "hidden"} : {}}
         className="slider-arrow prev-arrow"
         onClick={onClick}>
         <PrevArrowICON/>

@@ -28,7 +28,7 @@ function TitleCardSkeleton() {
     <div className="titles-skeletons">
       { Array(cards).fill(0).map((title, index)=>{
         return(
-          <div key={title} className="title-card-skeleton-wrapper">
+          <div key={index} className="title-card-skeleton-wrapper">
             <div style={{animationDelay: `${0.2 * index}s`}} className="title-card-skeleton"/>
           </div>
         )})

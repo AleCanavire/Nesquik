@@ -64,13 +64,35 @@
                }
             }
          }
-         .title-backdrop{
+         .title-backdrop-container{
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             transition: opacity .5s, visibility .5s;
+            .title-backdrop{
+               width: 100%;
+               height: 100%;
+            }
+            .title-logo{
+               position: absolute;
+               left: 5%;
+               bottom: 5%;
+               width: 45%;
+               max-height: 35%;
+               object-fit: contain;
+               object-position: bottom left;
+               filter: drop-shadow(2px 2px 4px #000);
+            }
+            svg{
+               position: absolute;
+               top: 0;
+               left: 0;
+               width: 4.8%;
+               margin: 3%;
+               height: auto;
+            }
          }
       }
       .mini-detail-info{
@@ -194,11 +216,16 @@
                      }
                      .thumbs-selection{
                         position: relative;
-                        width: 40px;
-                        height: 40px;
+                        max-width: 42px;
+                        min-width: 32px;
+                        max-height: 42px;
+                        min-height: 32px;
                         margin: 0 .2rem;
                         border-radius: 50%;
                         background-color: transparent;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         cursor: pointer;
                         &:hover{
                            background-color: rgb(128 128 128 / 20%);
@@ -209,9 +236,10 @@
                         }
                         svg{
                            box-sizing: initial;
-                           width: 25px;
-                           height: 25px;
-                           padding: 7.5px;
+                           width: 1.8rem;
+                           height: 1.8rem;
+                           min-width: 1.8rem;
+                           padding: .8rem;
                         }
                         .thumbs-selection-tooltip{
                            position: absolute;
@@ -338,6 +366,33 @@
                   vertical-align: middle;
                }
             }
+         }
+      }
+   }
+}
+
+@media (max-width: 1560px){
+   .mini-modal-container .mini-title-detail .mini-detail-info .metadata-and-controls .button-controls .thumbs-rate .thumbs-selection-overlay{
+      width: auto;
+   }
+}
+
+@media (max-width: 1024px){
+   .mini-modal-container .mini-title-detail{
+      font-size: 1.8rem;
+      .mini-detail-info .metadata-and-controls .button-controls{
+         .thumbs-rate .thumbs-selection-overlay .thumbs-selection svg{
+            width: 2.8rem;
+            min-width: 2.8rem;
+            height: 2.8rem;
+         }
+         .button-control svg{
+            width: 2.8rem;
+            min-width: 2.8rem;
+            height: 2.8rem;
+         }
+         .thumbs-rate .thumbs-selection-overlay .thumbs-selection .thumbs-selection-tooltip, .my-list .my-list-tooltip, .more-info .more-info-tooltip{
+            font-size: 2rem;
          }
       }
    }

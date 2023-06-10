@@ -37,7 +37,7 @@ function EpisodesContainer({ title }) {
               { showMenu && 
                 <ul className="dropdown-menu">
                   { title.seasons.map((season, index) => {
-                    if(season.episode_count && season.overview && season.air_date)
+                    if(season.episode_count && season.air_date)
                     return(
                       <li onClick={()=> selectSeason(season.season_number)} className="dropdown-menu-item" key={index}>
                         {`Temporada ${season.season_number}  `}

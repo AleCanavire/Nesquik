@@ -147,6 +147,7 @@
       display: flex;
       justify-content: center;
       border-bottom: 2px solid #404040;
+      z-index: 2;
       &.collapsed{
          background-image: linear-gradient(
                            0deg,#181818 0,
@@ -184,6 +185,47 @@
             width: 1.8rem;
             min-width: 1.8rem;
             height: 1.8rem;
+         }
+      }
+   }
+}
+
+
+@media (max-width: 870px){
+   .more-like-this{
+      .more-like-this-collapsed{
+         .more-like-this-body .more-like-this-item .title-card-metadata-container .title-card-metadata .my-list svg{
+            width: 2.8rem;
+            min-width: 2.8rem;
+            height: 2.8rem;
+         }
+      }
+      .section-divider .expand-button svg{
+         width: 2.8rem;
+         min-width: 2.8rem;
+         height: 2.8rem;
+      }
+   }
+}
+@media (min-width: 480px) and (max-width: 768px){
+   .more-like-this{
+      .more-like-this-collapsed{
+         .more-like-this-body{
+            grid-template-columns: repeat(2, 1fr);
+         }
+      }
+   }
+}
+@media (max-width: 480px){
+   .more-like-this{
+      font-size: inherit;
+      .more-like-this-header{
+         font-size: 3.5em;
+      }
+      .more-like-this-collapsed{
+         .more-like-this-body{
+            grid-template-columns: 1fr;
+            font-size: 2.5em;
          }
       }
    }

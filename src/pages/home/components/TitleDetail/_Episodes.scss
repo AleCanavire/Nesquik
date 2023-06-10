@@ -33,6 +33,7 @@
             padding: 0.5em 1em;
             font-size: 1.5em;
             font-weight: 500;
+            white-space: nowrap;
             position: relative;
             display: flex;
             align-items: center;
@@ -172,6 +173,31 @@
                line-height: 20px;
                padding: 0 1em 1em;
             }
+         }
+      }
+   }
+}
+
+@media (max-width: 480px){
+   .episodes-container{
+      .episode-selector-header{
+         .section-header{
+            h3{
+               font-size: 3.5em;
+            }
+            .subtitle-header{
+               font-size: 2.2em;
+            }
+         }
+         .episode-selector-dropdown{
+            font-size: 1.5em;
+         }
+      }
+      .episodes-selector-body{
+         font-size: 2em;
+         .title-card-episode .title-card-image .title-play-icon svg{
+            width: 2em;
+            height: 2em;
          }
       }
    }

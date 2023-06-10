@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { homeContext } from '../../../../context/homeContext';
 import { useGetCredits, useGetLogos, useGetTitle, useGetVideo } from '../../../../hooks/GetInfoTitle';
+import { ReactComponent as NetflixOriginals } from "../../../../assets/images/netflix-originals.svg";
 
 function TitleCard({ type, title }) {
   const { showModal } = useContext(homeContext);
@@ -31,31 +32,43 @@ function TitleCard({ type, title }) {
                         showModal(titleData, logo, backdrop, video, credits, cardRef.current.getBoundingClientRect());
                       }, 500)
   }
-  function onHideModal() {
-    clearTimeout(isOver.current);
-  }
+  useEffect(()=>{
+    function onHideModal(e) {
+      if (!cardRef.current.contains(e.target)){
+        clearTimeout(isOver.current);
+      }
+    }
+    document.addEventListener("mouseover", onHideModal)
+    return () => document.removeEventListener("mouseover", onHideModal)
+  }, [])
 
   return (
     <div className="title-card-wrapper">
-      <div ref={cardRef} className="title-card">
-        { backdrop?.file_path &&
-          <img
-            className="title-backdrop"
-            src={`https://image.tmdb.org/t/p/w780${backdrop.file_path}`}
-            alt={title.name}
-            loading="lazy"
-            onMouseOver={onShowModal}
-            onMouseLeave={onHideModal}
-          />
-        }
-        { (!backdrop?.iso_639_1 && logo?.file_path) &&
-          <img
-            className="title-logo"
-            src={`https://image.tmdb.org/t/p/w185${logo?.file_path}`}
-            alt={title.name}
-            loading="lazy"
-          />
-        }
+      <div ref={cardRef} onMouseOver={onShowModal} className="title-card">
+        <div className="title-media">
+          { titleData?.networks?.map(network => {
+              if (network.id === 213) {
+                return <NetflixOriginals/>
+              }
+            })
+          }
+          { backdrop?.file_path &&
+            <img
+              className="title-backdrop"
+              src={`https://image.tmdb.org/t/p/w780${backdrop.file_path}`}
+              alt={title.name}
+              loading="lazy"
+            />
+          }
+          { (!backdrop?.iso_639_1 && logo?.file_path) &&
+            <img
+              className="title-logo"
+              src={`https://image.tmdb.org/t/p/w185${logo?.file_path}`}
+              alt={title.name}
+              loading="lazy"
+            />
+          }
+        </div>
       </div>
     </div>
   )

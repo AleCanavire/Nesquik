@@ -1,3 +1,6 @@
+.home-container{
+   width: 100%;
+}
 .title-detail-backdrop{
 	background-color: #000;
 	position: fixed;
@@ -10,26 +13,23 @@
 	z-index: 999;
 }
 .title-detail-container{
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 100%;
 	display: flex;
 	justify-content: center;
-	overflow-y: auto;
+   will-change: scroll-position;
 	z-index: 1000;
-	&::-webkit-scrollbar{
-		display: none;
-	}
 	.title-detail-modal{
 		position: absolute;
 		background-color: #181818;
 		top: 2em;
 		width: 911.06px;
-		min-width: 850px;
+      min-height: 130vh;
 		border-radius: 6px;
       font-size: 16px;
+      transform-origin: 50% 12.5%;
 		transition-property: opacity, transform;
 		transition-duration: 500ms;
 		overflow: hidden;
@@ -89,8 +89,8 @@
                      cursor: pointer;
                   }
                   svg{
-                     width: 30px;
-                     height: 30px;
+                     width: 2.4rem;
+                     height: 2.4rem;
                      margin-right: 1rem;
                   }
                   span{
@@ -101,10 +101,12 @@
                }
                .my-list{
                   position: relative;
-                  width: 42px;
-                  height: 42px;
+                  max-height: 42px;
+                  max-width: 42px;
+                  min-height: 32px;
+                  min-width: 32px;
                   padding: .8rem;
-                  margin: .25em .3em;
+                  margin: .25em;
                   border: 2px solid rgb(255 255 255 / 50%);
                   border-radius: 50%;
                   background-color: rgb(42 42 42 / 60%);
@@ -123,7 +125,6 @@
                      width: 1.8rem;
                      height: 1.8rem;
                      min-width: 1.8rem;
-                     
                   }
                   .my-list-tooltip{
                      color: rgb(24 24 24);
@@ -158,8 +159,10 @@
                }
                .thumbs-rate{
                   position: relative;
-                  width: 42px;
-                  height: 42px;
+                  max-height: 42px;
+                  max-width: 42px;
+                  min-height: 32px;
+                  min-width: 32px;
                   margin: .25em;
                   padding: .8rem;
                   border: 2px solid rgb(255 255 255 / 50%);
@@ -211,11 +214,16 @@
                      }
                      .thumbs-selection{
                         position: relative;
-                        width: 40px;
-                        height: 40px;
+                        max-width: 42px;
+                        min-width: 32px;
+                        max-height: 42px;
+                        min-height: 32px;
                         margin: 0 .2rem;
                         border-radius: 50%;
                         background-color: transparent;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                         cursor: pointer;
                         &:hover{
                            background-color: rgb(128 128 128 / 20%);
@@ -226,9 +234,10 @@
                         }
                         svg{
                            box-sizing: initial;
-                           width: 25px;
-                           height: 25px;
-                           padding: 7.5px;
+                           width: 1.8rem;
+                           height: 1.8rem;
+                           min-width: 1.8rem;
+                           padding: .8rem;
                         }
                         .thumbs-selection-tooltip{
                            position: absolute;
@@ -289,9 +298,12 @@
 				position: absolute;
 				right: 3em;
 				bottom: 10%;
-				width: 42px;
-				height: 42px;
+            max-height: 42px;
+            max-width: 42px;
+            min-height: 32px;
+            min-width: 32px;
             margin-bottom: 1em;
+            padding: .8rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -306,13 +318,14 @@
 					opacity: 1;
 				}
 				svg{
-					width: 22px;
-					height: 22px;
+               width: 1.8rem;
+               height: 1.8rem;
+               min-width: 1.8rem;
 				}
 			}
 			.shadowBack{
 				position: absolute;
-				bottom: 0;
+				bottom: -1px;
 				width: 100%;
 				height: 100%;
 				background: linear-gradient(0deg, #181818, transparent 50%);
@@ -423,4 +436,106 @@
          }
       }
 	}
+}
+
+@media (min-width: 1500px){
+   .title-detail-container .title-detail-modal{
+      width: 911.06px;
+   }
+}
+
+@media (max-width: 1200px){
+   .title-detail-container .title-detail-modal .title-detail-header .title-logo-and-buttons .button-controls-container .thumbs-rate .thumbs-selection-overlay{
+      width: auto;
+   }
+}
+
+@media (min-width: 870px) and (max-width: 1500px){
+   .title-detail-container .title-detail-modal{
+      width: 850px;
+   }
+}
+
+@media (max-width: 870px){
+   .title-detail-container .title-detail-modal{
+      width: 98%;
+      font-size: 1rem;
+      .title-detail-header{
+         .title-logo-and-buttons .button-controls-container{
+            .play-button svg{
+               width: 3.2rem;
+               height: 3.2rem;
+            }
+            .my-list svg, .thumbs-rate .your-rate{
+               width: 2.8rem;
+               height: 2.8rem;
+               min-width: 2.8rem;
+            }
+            .my-list .my-list-tooltip{
+               font-size: 2rem;
+            }
+            .thumbs-rate .thumbs-selection-overlay .thumbs-selection{
+               svg{
+                  width: 2.8rem;
+                  height: 2.8rem;
+                  min-width: 2.8rem;
+               }
+               .thumbs-selection-tooltip{
+                  font-size: 2rem;
+               }
+            }
+         }
+         .title-audio-toggle svg{
+            width: 2.8rem;
+            height: 2.8rem;
+            min-width: 2.8rem;
+         }
+         .title-close{
+            max-height: 42px;
+            max-width: 42px;
+            min-height: 32px;
+            min-width: 32px;
+            width: auto;
+            height: auto;
+            padding: .8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            svg{
+               width: 2.8rem;
+               height: 2.8rem;
+               min-width: 2.8rem;
+            }
+         }
+      }
+      .title-detail-body{
+         .title-detail-metadata{
+            .metadata-left{
+               font-size: 1.8rem;
+               .title-synopsis{
+                  font-size: 2rem;
+                  p{
+                     line-height: 1.4;
+                  }
+               }
+            }
+            .metadata-right{
+               font-size: 1.9rem;
+            }
+         }
+      }
+   }
+}
+
+
+@media (max-width: 480px){
+   .title-detail-container .title-detail-modal .title-detail-body .about-title-container{
+      font-size: inherit;
+      .about-title-header{
+         font-size: 3.5em;
+      }
+      .about-title-body .about-tag{
+         font-size: 2.5em;
+      }
+   }
 }

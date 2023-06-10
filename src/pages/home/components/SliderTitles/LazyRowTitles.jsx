@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import TitleCardSkeleton from './TitleCardSkeleton';
+import { ReactComponent as ArrowRowTitle } from "../../../../assets/images/arrow-row-title.svg"
 
 const RowTitlesCard = React.lazy(
   () => import ("./RowTitlesCard")
@@ -34,6 +35,9 @@ function LazyRowTitles({ section, type, url, id }) {
           </div>
           <div className="more-visible">
             <div className="see-all">Explorar todos</div>
+            <div className="arrow-row-title">
+              <ArrowRowTitle/>
+            </div>
           </div>
         </a>
       </h2>

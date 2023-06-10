@@ -47,7 +47,7 @@ function Home() {
         <LazyRowTitles
           section={"Dramas"}
           type={"movie"}
-          url={"&with_genres=18&with_watch_providers=8&watch_region=AR"}
+          url={"&with_genres=18&with_watch_providers=8&watch_region=AR&page=2"}
           id={"drama-movies"}
         />
         <LazyRowTitles

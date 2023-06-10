@@ -87,8 +87,8 @@ export function useGetTrending() {
   useEffect(()=>{
     const randomNumber = Math.trunc(Math.random() * 2) + 1;
     const url = randomNumber === 1
-                ? "https://api.themoviedb.org/3/discover/tv?api_key=4c42277c85a8a8f307d358420965071c&with_networks=213&language=es-MX"
-                : "https://api.themoviedb.org/3/discover/movie?api_key=4c42277c85a8a8f307d358420965071c&with_watch_providers=8&watch_region=AR&language=es-MX";
+                ? "https://api.themoviedb.org/3/discover/tv?api_key=4c42277c85a8a8f307d358420965071c&with_networks=213&language=es-ES&page=2"
+                : "https://api.themoviedb.org/3/discover/movie?api_key=4c42277c85a8a8f307d358420965071c&with_watch_providers=8&watch_region=AR&language=es-ES";
     fetch(url)
     .then(response => response.json())
     .then(data => {

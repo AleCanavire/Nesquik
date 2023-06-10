@@ -9,20 +9,17 @@ export function HomeContextProvider({ children }) {
   const [position, setPosition] = useState(null);
   const [search, setSearch] = useState("");
 
-  function onAddInfo(title, logo, video, credits, backdrop) {
-    setInfoTitle({
-      ...title,
-      logo: logo.file_path,
-      backdrop: backdrop,
-      video: video,
-      cast: credits.cast,
-      crew: credits.crew,
-    })
+  function onAddInfo(data) {
+    document.querySelector(".home-container").style =  `position: fixed;
+                                                        top:  -${window.scrollY}px;
+                                                        overflow: visible;`;
+    window.scrollTo(0, 0);
+    setInfoTitle(data);
   }
   function onAddMiniInfo(title, logo, video, backdrop, credits) {
     setMiniModal({
       ...title,
-      logo: logo.file_path,
+      logo: logo,
       backdrop: backdrop,
       video: video,
       cast: credits.cast,
@@ -31,6 +28,9 @@ export function HomeContextProvider({ children }) {
   }
 
   function closeDetail() {
+    const top = document.querySelector(".home-container").style.top.slice(1, -2);
+    document.querySelector(".home-container").style = null;
+    window.scrollTo(0, top);
     setInfoTitle(null);
   }
 
@@ -43,7 +43,7 @@ export function HomeContextProvider({ children }) {
     setShowMiniModal(false);
     setTimeout(() => {
       setMiniModal(null);
-    }, 300);
+    }, 200);
   }
 
   return(

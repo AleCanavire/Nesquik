@@ -100,6 +100,9 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 5.5vw 0;
          }
+         .search-title-header .rail{
+            font-size: 1.5vw;
+         }
       }
    }
 }
@@ -110,6 +113,14 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 7.5vw 0;
          }
+         .search-title-header .rail{
+            font-size: 2vw;
+         }
       }
+   }
+}
+@media (max-width: 500px){
+   .search-container .search .search-title-header .rail{
+      font-size: 3vw;
    }
 }

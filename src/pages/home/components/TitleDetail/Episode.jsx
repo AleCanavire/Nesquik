@@ -4,10 +4,10 @@ function Episode({ season, episode, type, id }) {
   const [episodeData, setEpisodeData] = useState(null);
 
   useEffect(()=>{
-    fetch(`https://api.themoviedb.org/3/${type}/${id}/season/${season}/episode/${episode}?api_key=4c42277c85a8a8f307d358420965071c&language=es-MX`)
+    fetch(`https://api.themoviedb.org/3/${type}/${id}/season/${season}/episode/${episode}?api_key=4c42277c85a8a8f307d358420965071c&language=es-ES`)
       .then(response => response.json())
       .then(data => {
-        if (data.overview.length > 200) {
+        if (data?.overview?.length > 200) {
           let resume = data.overview.slice(0, 200);
           let lastPoint = resume.lastIndexOf(".");
           let overview = resume.substring(0, lastPoint);
@@ -28,7 +28,7 @@ function Episode({ season, episode, type, id }) {
       <div className="title-card-image">
         { episodeData?.still_path &&
           <img
-            src={`https://image.tmdb.org/t/p/w300${episodeData?.still_path}`}
+            src={`https://image.tmdb.org/t/p/w185${episodeData?.still_path}`}
             alt={episodeData?.name}
             loading="lazy"
           />
@@ -42,9 +42,11 @@ function Episode({ season, episode, type, id }) {
           <span className="title">{episodeData?.name}</span>
           <span className="title-duration">{`${episodeData?.runtime} min`}</span>
         </div>
-        <p className="title-card-sypnosis">
-          {episodeData?.overview}
-        </p>
+        { episodeData?.overview &&
+          <p className="title-card-sypnosis">
+            {episodeData?.overview}
+          </p>
+        }
       </div>
     </div>
   )

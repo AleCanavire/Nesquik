@@ -28,10 +28,10 @@ function Search() {
             <div className="suggestions">
               { titles &&
               <>
-                <span className="suggestions-label">
-                  Explora títulos relacionados con:
-                </span>
                 <ul>
+                  <span className="suggestions-label">
+                    Explora títulos relacionados con:
+                  </span>
                   { titles?.slice(0, 5).map(title => {
                     const name = title.title || title.original_title || title.name || title.original_name;
                     return(

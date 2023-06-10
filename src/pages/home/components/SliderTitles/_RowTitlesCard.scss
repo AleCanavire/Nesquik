@@ -20,6 +20,16 @@ main{
          &:hover{
             color: #fff;
          }
+         &:hover > .more-visible .see-all{
+            max-width: 200px;
+            opacity: 1;
+            transform: translateX(1vw);
+         }
+         &:hover > .more-visible .arrow-row-title{
+            display: inline-block;
+            height: .65vw;
+            transform: translateX(1vw);
+         }
          .title{
             display: table-cell;
             font-size: 1.4vw;
@@ -31,6 +41,7 @@ main{
             display: table-cell;
             vertical-align: bottom;
             .see-all{
+               color: #54b9c5;
                display: inline-block;
                max-width: 0;
                margin-right: 4px;
@@ -41,6 +52,15 @@ main{
                vertical-align: bottom;
                white-space: nowrap;
                cursor: pointer;
+            }
+            .arrow-row-title{
+               display: none;
+               vertical-align: bottom;
+               height: .9vw;
+               svg{
+                  display: block;
+                  height: 100%;
+               }
             }
          }
       }
@@ -69,7 +89,7 @@ main{
       }
       .slider-arrow{
          background: rgb(20 20 20 / 50%);
-         width: calc(4% - 0.35vw);
+         width: calc(4% - 0.2vw);
          height: 100%;
          position: absolute;
          top: 0;
@@ -131,21 +151,34 @@ main{
    border-radius: 0.2vw;
    overflow: hidden;
    cursor: pointer;
-   .title-backdrop{
+   .title-media{
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-   }
-   .title-logo{
-      position: absolute;
-      left: 5%;
-      bottom: 5%;
-      width: 45%;
-      max-height: 50%;
-      object-fit: contain;
-      object-position: bottom left;
+      svg{
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 4.8%;
+         margin: 3%;
+         height: auto;
+      }
+      .title-backdrop{
+         width: 100%;
+         height: 100%;
+      }
+      .title-logo{
+         position: absolute;
+         left: 5%;
+         bottom: 5%;
+         width: 45%;
+         max-height: 35%;
+         object-fit: contain;
+         object-position: bottom left;
+         filter: drop-shadow(2px 2px 4px #000);
+      }
    }
 }
 

@@ -6,7 +6,7 @@ function MoreLikeThis({ title }) {
   const [collapsed, setCollapsed] = useState(true);
 
   useEffect(()=>{
-    fetch(`https://api.themoviedb.org/3/${title.type}/${title.id}/recommendations?api_key=4c42277c85a8a8f307d358420965071c&language=es-MX`)
+    fetch(`https://api.themoviedb.org/3/${title.type}/${title.id}/recommendations?api_key=4c42277c85a8a8f307d358420965071c&language=es-ES`)
       .then(response => response.json())
       .then(data => {
         setSimilarTitles(data.results)
