@@ -98,7 +98,7 @@ function MiniTitleDetail() {
           { miniModal?.video?.key &&
             <ReactPlayer
               className="title-player"
-              style={miniModal.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.3)"}}
+              style={miniModal.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.35)"}}
               url={`https://www.youtube.com/watch?v=${miniModal.video.key}`}
               width="100%"
               height="100%"

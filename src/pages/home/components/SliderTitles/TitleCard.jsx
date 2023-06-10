@@ -18,9 +18,10 @@ function TitleCard({ type, title }) {
     fetch(`https://api.themoviedb.org/3/${type}/${title.id}/images?api_key=4c42277c85a8a8f307d358420965071c`)
       .then(response => response.json())
       .then(data => {
-        const backdropTitle = data.backdrops.find(backdrop => backdrop.iso_639_1 === "es") ||
+        const backdropTitle = data.backdrops.findLast(backdrop => backdrop.iso_639_1 === "es") ||
                               data.backdrops.find(backdrop => backdrop.iso_639_1 === "en") ||
                               data.backdrops.find(backdrop => backdrop.iso_639_1 === "ko") ||
+                              data.backdrops.find(backdrop => backdrop.iso_639_1 === "ja") ||
                               data.backdrops.find(backdrop => !backdrop.iso_639_1)         ||
                               data.backdrops.find(backdrop => backdrop)
         setBackdrop(backdropTitle);
