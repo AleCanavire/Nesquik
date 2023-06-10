@@ -141,7 +141,7 @@ function MiniTitleDetail() {
             }
             { miniModal?.networks?.map(network => {
                 if (network.id === 213) {
-                  return <NetflixOriginals/>
+                  return <NetflixOriginals key={network}/>
                 }
               })
             }

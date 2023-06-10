@@ -48,7 +48,7 @@ function TitleCard({ type, title }) {
         <div className="title-media">
           { titleData?.networks?.map(network => {
               if (network.id === 213) {
-                return <NetflixOriginals/>
+                return <NetflixOriginals key={network}/>
               }
             })
           }
