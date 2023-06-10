@@ -54,7 +54,7 @@ function RowTitlesCard({ type, url, id }) {
     const { onClick, currentSlide } = props;
     return (
       <span
-        style={currentSlide === 0 ? {visibility: "hidden"} : {}}
+        style={currentSlide === 0 ? {opacity: 0, cursor: "default"} : {}}
         className="slider-arrow prev-arrow"
         onClick={onClick}>
         <PrevArrowICON/>

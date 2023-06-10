@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="13" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
-  <defs>
-    <style>
-      .cls-1 {
-        fill: #fff;
-      }
-    </style>
-  </defs>
-  <polygon class="cls-1" points="15 1.98 13.02 0 7.5 5.52 1.98 0 0 1.98 5.52 7.5 0 13.02 1.98 15 7.5 9.48 13.02 15 15 13.02 9.48 7.5 15 1.98"/>
+<svg width="13" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" fill="#fff">
+  <polygon points="15 1.98 13.02 0 7.5 5.52 1.98 0 0 1.98 5.52 7.5 0 13.02 1.98 15 7.5 9.48 13.02 15 15 13.02 9.48 7.5 15 1.98"/>
 </svg>
