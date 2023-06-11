@@ -82,7 +82,7 @@ function TitleDetail() {
   return (
     <>
       <div className="title-detail-container">
-        <div className="title-detail-modal" style={showDetail ? {} : {opacity: "0", transform: "scale(0.8)"}}>
+        <div className="title-detail-modal" style={showDetail ? {} : {opacity: "0", transform: "scale(0.8)"}} role="dialog" aria-modal="true">
           <div className="title-detail-header">
             <div className="title-media">
               { infoTitle?.video?.key &&

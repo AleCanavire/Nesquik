@@ -27,25 +27,27 @@ function TitleCard({ type, title }) {
         setBackdrop(backdropTitle);
       })
   }, [])
-
-  function onShowModal() {
-    isOver.current =  setTimeout(() => {
-                        showModal(titleData, logo, backdrop, video, credits, cardRef.current.getBoundingClientRect());
-                      }, 500)
-  }
+  
   useEffect(()=>{
-    function onHideModal(e) {
-      if (!cardRef.current.contains(e.target)){
-        clearTimeout(isOver.current);
-      }
+    function onShowModal() {
+      isOver.current =  setTimeout(() => {
+                          showModal(titleData, logo, backdrop, video, credits, cardRef.current.getBoundingClientRect());
+                        }, 700)
     }
-    document.addEventListener("mouseover", onHideModal)
-    return () => document.removeEventListener("mouseover", onHideModal)
-  }, [])
+    function onHideModal() {
+      clearTimeout(isOver.current);
+    }
+    cardRef.current.addEventListener("mouseover", onShowModal);
+    cardRef.current.addEventListener("mouseout", onHideModal);
+    return () => {
+      cardRef.current.removeEventListener("mouseover", onShowModal)
+      cardRef.current.removeEventListener("mouseout", onHideModal)
+    }
+  }, [titleData, logo, backdrop, video, credits])
 
   return (
     <div className="title-card-wrapper">
-      <div ref={cardRef} onMouseOver={onShowModal} className="title-card">
+      <div ref={cardRef} className="title-card">
         <div className="title-media">
           { titleData?.networks?.map(network => {
               if (network.id === 213) {
