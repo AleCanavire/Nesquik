@@ -13,6 +13,12 @@ function MiniTitleDetail() {
   const { isMuted, isPlaying, isEnded, trailerDuration, showTrailer, actionButton, hidePlayer, endedTrailer, setShowTrailer } = usePlayerActions();
   const [year, setYear] = useState(null);
   const [duration, setDuration] = useState(null);
+  const [metadata, setMetadata] = useState({
+    year: null,
+    duration: null,
+    genres: null,
+    forYou: null
+  });
   const miniModalRef = useRef();
 
   useEffect(()=>{
@@ -20,20 +26,23 @@ function MiniTitleDetail() {
 
     //YEAR
     const year = miniModal.first_air_date?.split("-")[0] || miniModal.release_date?.split("-")[0]
-    setYear(year);
+    setMetadata(prev => ({...prev, year: year}));
 
     // DURATION
     if (miniModal.type === "tv") {
       const duration =  miniModal.number_of_seasons > 1
                         ? `${miniModal.number_of_seasons} temporadas`
                         : `${miniModal.number_of_episodes} episodios`
-      setDuration(duration);
+      setMetadata(prev => ({...prev, duration: duration}));
     } else if (miniModal.type === "movie") {
       const hours = Math.floor(miniModal.runtime / 60);
       const min = miniModal.runtime % 60;
       const duration = `${hours} h ${min} min`
-      setDuration(duration);
+      setMetadata(prev => ({...prev, duration: duration}));
     }
+    //Foryou
+    const number = Math.floor((Math.random() * (99 - 88)) + 88);
+    setMetadata(prev => ({...prev, forYou: number}));
   }, [miniModal])
 
   const showMiniStyles = {
@@ -186,9 +195,9 @@ function MiniTitleDetail() {
               </button>
             </div>
             <div className="metadata-info">
-              <span className="match-score">{Math.floor((Math.random() * (99 - 88)) + 88)} % para ti</span>
-              <span className="title-year">{year}</span>
-              <span className="title-duration">{duration}</span>
+              <span className="match-score">{metadata?.forYou} % para ti</span>
+              <span className="title-year">{metadata?.year}</span>
+              <span className="title-duration">{metadata?.duration}</span>
               <span className="title-quality">HD</span>
               <svg viewBox="0 0 58.07 24" className="svg-icon svg-icon-audio-description"><path fill="#fff" d="M18.34,10.7v7.62l-4.73,0ZM.5,26.6h8l2.17-3,7.49,0s0,2.08,0,3.06h5.7V2.77H17C16.3,3.79.5,26.6.5,26.6Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M30.63,8.91c3.6-.13,6.1,1.8,6.48,4.9.5,4.15-2.43,6.85-6.66,6.56V9.19A.26.26,0,0,1,30.63,8.91ZM25,3V26.56c5.78.11,10.22.32,13.49-1.85a12.2,12.2,0,0,0,5.14-11.36A11.52,11.52,0,0,0,33.38,2.72c-2.76-.23-8.25,0-8.25,0A.66.66,0,0,0,25,3Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M43.72,3.43c1.45-.4,1.88,1.2,2.51,2.31a18.73,18.73,0,0,1-1.42,20.6h-.92a1.86,1.86,0,0,1,.42-1.11,21.39,21.39,0,0,0,2.76-10.16A22.54,22.54,0,0,0,43.72,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M48.66,3.43c1.43-.4,1.87,1.2,2.5,2.31a18.83,18.83,0,0,1-1.42,20.6h-.91c-.07-.42.24-.79.41-1.11A21.39,21.39,0,0,0,52,15.07,22.63,22.63,0,0,0,48.66,3.43Z" transform="translate(-0.5 -2.62)"></path><path fill="#fff" d="M53.57,3.43c1.46-.4,1.9,1.2,2.54,2.31a18.58,18.58,0,0,1-1.44,20.6h-.93c-.07-.42.24-.79.42-1.11A21,21,0,0,0,57,15.07,22.26,22.26,0,0,0,53.57,3.43Z" transform="translate(-0.5 -2.62)"></path></svg>
             </div>

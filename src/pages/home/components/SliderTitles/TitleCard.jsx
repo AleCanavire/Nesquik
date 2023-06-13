@@ -32,7 +32,7 @@ function TitleCard({ type, title }) {
     function onShowModal() {
       isOver.current =  setTimeout(() => {
                           showModal(titleData, logo, backdrop, video, credits, cardRef.current.getBoundingClientRect());
-                        }, 700)
+                        }, 500)
     }
     function onHideModal() {
       clearTimeout(isOver.current);
