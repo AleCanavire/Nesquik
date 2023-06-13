@@ -112,7 +112,7 @@
             }
 			}
 		}
-		.notification {
+		.notifications {
 			margin-right: 10px;
 			margin-top: 0.2em;
 			padding: 2px 6px;
@@ -121,17 +121,11 @@
 				cursor: pointer;
 			}
 		}
-		.account {
+		.account-menu {
+         position: relative;
 			display: flex;
 			align-items: center;
 			cursor: pointer;
-			&:hover > .profiles .arrow-close {
-				transition: transform 0.4s ease;
-				transform: rotate(180deg);
-			}
-			&:hover > .profiles .profile-select .arrow-open {
-				opacity: 1;
-			}
 			.profiles {
 				display: flex;
 				align-items: center;
@@ -169,92 +163,100 @@
 					transition: transform 0.4s ease;
 				}
 			}
-
-			.accountMenu {
-				font-family: "Roboto", sans-serif;
-				cursor: default;
-				position: fixed;
-				top: 70px;
-				right: 0;
-				width: 220px;
-				margin-right: 4%;
-				background-color: rgba(0, 0, 0, 0.9);
-				border: 1px rgba(255, 255, 255, 0.15) solid;
-				opacity: 0;
-				transition-duration: 150ms;
-				transition-property: opacity;
-				.profiles {
-					.profilesList {
-						padding: 10px 0 5px;
-						li {
-							display: flex;
-							align-items: center;
-							list-style: none;
-							padding: 5px 10px;
-							img {
-								margin-right: 10px;
-								width: 32px;
-								height: 32px;
-								border-radius: 4px;
-								cursor: pointer;
-								&:hover + p {
-									text-decoration: underline;
-								}
-							}
-							p {
-								color: rgb(255, 255, 255);
-								font-size: 13px;
-								width: 100px;
-								cursor: pointer;
-								&:hover {
-									text-decoration: underline;
-								}
-							}
-						}
-					}
-				}
-				.settings {
-					ul {
-						padding-bottom: 10px;
-						li {
-							padding: 5px 10px;
-							display: flex;
-							align-items: center;
-							list-style: none;
-							svg {
-								color: #b3b3b3;
-								box-sizing: initial;
-								padding: 0 13px 0 5px;
-								cursor: pointer;
-							}
-							p {
-								color: rgb(255, 255, 255);
-								font-size: 13px;
-								cursor: pointer;
-								&:hover {
-									text-decoration: underline;
-								}
-							}
-						}
-					}
-				}
-				.exitAccount {
-					padding: 10px 0;
-					border-top: 1px rgba(255, 255, 255, 0.25) solid;
-					display: flex;
-					justify-content: center;
-					a {
-						padding: 5px 10px;
-						color: rgb(255, 255, 255);
-						font-size: 13px;
-						line-height: 16px;
-						text-decoration: none;
-						&:hover {
-						text-decoration: underline;
-						}
-					}
-				}
-			}
+         .account-dropdown{
+            color: #fff;
+            background-color: rgb(0 0 0/ 90%);
+            position: absolute;
+            top: 53px;
+            right: 0;
+            width: 220px;
+            border: 1px solid rgba(255 255 255 / 15%);
+            font-size: 13px;
+            line-height: 21px;
+            transition-property: opacity;
+            transition-duration: 150ms;
+            cursor: default;
+            ul{
+               list-style: none;
+            }
+            .dropdown-content{
+               .list-profiles{
+                  width: 100%;
+                  padding: 10px 0 5px;
+                  .item-profile{
+                     padding: 5px 10px;
+                     .profile{
+                        cursor: pointer;
+                        &:hover > .profile-name{
+                           text-decoration: underline;
+                        }
+                        .profile-icon{
+                           display: inline-block;
+                           vertical-align: middle;
+                           width: 32px;
+                           height: 32px;
+                           margin-right: 10px;
+                           border-radius: 4px;
+                        }
+                        .profile-name{
+                           display: inline-block;
+                           width: 100px;
+                           line-height: 18px;
+                           font-weight: 300;
+                           text-overflow: ellipsis;
+                           vertical-align: middle;
+                           white-space: pre;
+                           overflow: hidden;
+                        }
+                     }
+                  }
+               }
+               .account-links{
+                  width: 100%;
+                  padding-bottom: 10px;
+                  .sub-menu-item{
+                     display: block;
+                     font-size: 13px;
+                     line-height: 16px;
+                     font-weight: 300;
+                     padding: 5px 10px;
+                     .item-link{
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+                        &:hover > span{
+                           text-decoration: underline;
+                        }
+                        svg{
+                           color: #b3b3b3;
+                           padding: 0 13px 0 5px;
+                           box-sizing: content-box;
+                        }
+                     }
+                  }
+               }
+               .sign-out{
+                  padding: 10px 0;
+                  border-top: 1px solid rgb(255 255 255 / 25%);
+                  .sign-out-item{
+                     display: block;
+                     font-size: 13px;
+                     line-height: 16px;
+                     font-weight: 300;
+                     text-align: center;
+                     padding: 5px 10px;
+                     span{
+                        display: block;
+                        width: 100%;
+                        cursor: pointer;
+                        &:hover{
+                           text-decoration: underline;
+                        }
+                     }
+                  }
+               }
+            }
+         }
 		}
 	}
 }
@@ -281,7 +283,7 @@
          .search-wrapper{
             margin-right: 15px;
          }
-         .notification{
+         .notifications{
             margin-right: 15px;
          }
       }
@@ -304,7 +306,7 @@
 @media (max-width: 950px){
 	.nav-home {
       .secondary-navigation{
-         .account{
+         .account-menu{
             .profiles{
                .arrow-close{
                   display: none;
@@ -367,7 +369,7 @@
    }
 }
 @media (max-width: 400px){
-   .nav-home .secondary-navigation .notification{
+   .nav-home .secondary-navigation .notifications{
       display: none;
    }
 }
