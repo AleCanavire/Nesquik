@@ -31,17 +31,17 @@ function TitleCard({ type, title }) {
   useEffect(()=>{
     function onShowModal() {
       isOver.current =  setTimeout(() => {
-                          showModal(titleData, logo, backdrop, video, credits, cardRef.current.getBoundingClientRect());
+                          showModal(titleData, logo, backdrop, video, credits, cardRef?.current?.getBoundingClientRect());
                         }, 500)
     }
     function onHideModal() {
       clearTimeout(isOver.current);
     }
-    cardRef.current.addEventListener("mouseover", onShowModal);
-    cardRef.current.addEventListener("mouseout", onHideModal);
+    cardRef?.current?.addEventListener("mouseover", onShowModal);
+    cardRef?.current?.addEventListener("mouseout", onHideModal);
     return () => {
-      cardRef.current.removeEventListener("mouseover", onShowModal)
-      cardRef.current.removeEventListener("mouseout", onHideModal)
+      cardRef?.current?.removeEventListener("mouseover", onShowModal)
+      cardRef?.current?.removeEventListener("mouseout", onHideModal)
     }
   }, [titleData, logo, backdrop, video, credits])
 

@@ -14,7 +14,9 @@ function RowTitlesCard({ type, url, id }) {
   useEffect(()=>{
     const storedTitles = sessionStorage.getItem(id);
     if (storedTitles) {
-      setTitles(JSON.parse(storedTitles));
+      setTimeout(()=>{
+        setTitles(JSON.parse(storedTitles));
+      }, 3600)
     } else{
       fetch(`https://api.themoviedb.org/3/discover/${type}?api_key=4c42277c85a8a8f307d358420965071c${url}`)
         .then(response => response.json())
