@@ -81,7 +81,7 @@ function MiniTitleDetail() {
 
   useEffect(()=>{
     function handleOnHideModal(e) {
-      if (!miniModalRef.current.contains(e.target)){
+      if (!miniModalRef?.current?.contains(e.target)){
         hideModal();
         setShowTrailer(false);
       }
@@ -102,7 +102,7 @@ function MiniTitleDetail() {
 
   return (
     <div className="mini-modal-container">
-      <div ref={miniModalRef} style={activeDetail ? titleDetail : {...positionDetail, ...showMiniStyles}} className="mini-title-detail">
+      <div ref={miniModalRef} style={activeDetail ? titleDetail : {...positionDetail, ...showMiniStyles}} className="mini-title-detail" aria-modal={true} role="dialog">
         <div className="mini-detail-media">
           { miniModal?.video?.key &&
             <ReactPlayer

@@ -14,6 +14,9 @@ function SearchInput({ showInput }) {
   }, [])
 
   useEffect(()=>{
+    if (search === "") {
+      navigate("/");
+    }
     function hideInput(e) {
       if (inputActive && search === "" && !searchRef.current.contains(e.target)) {
         showInput(false);
@@ -25,12 +28,12 @@ function SearchInput({ showInput }) {
 
   function onSearch(e) {
     setSearch(e.target.value);
-    if (e.target.value !== ""){
+    if (e.target.value){
       setTimeout(() => {
         navigate("/search");
       }, 300);
     } else{
-      navigate("/");
+      setSearch("");
     }
   }
 
