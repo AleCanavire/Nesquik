@@ -1,42 +1,31 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { homeContext } from './context/homeContext';
-import Home from './pages/home/Home';
-import NavBar from './pages/home/components/NavBar/NavBar';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HomeContextProvider } from './context/HomeContext';
+import { AuthContextProvider } from './context/AuthContext';
+import Login from './pages/login/Login';
+import NavBar from './components/NavBar/NavBar';
+import Browse from './pages/browse/Browse';
 import Search from './pages/search/Search';
-import MiniTitleDetail from './pages/home/components/MiniTitleDetail/MiniTitleDetail';
-import TitleDetail from './pages/home/components/TitleDetail/TitleDetail';
+import RequireAuth from './components/RequireAuth/RequireAuth';
 
 function App() {
-  const { infoTitle, miniModal } = useContext(homeContext);
-
-  useEffect(()=>{
-    if (infoTitle) {
-      const titleName = infoTitle.title || infoTitle.original_title || infoTitle.name || infoTitle.original_name;
-      document.title = `${titleName} - Nesquik`
-    } else {
-      document.title = "Home - Nesquik"
-    }
-  }, [infoTitle])
-
   return (
-    <BrowserRouter>
-      <div className="home-container">
-      <NavBar/>
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/search" element={<Search/>} />
-        </Routes>
-      </div>
-      {miniModal &&
-        <MiniTitleDetail/>
-      }
-      {infoTitle &&
-        <TitleDetail/>
-      }
-    </BrowserRouter>
+    <Router>
+      <AuthContextProvider>
+        <HomeContextProvider>
+          <Routes>
+            <Route path="/" element={<div>home</div>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/" element={<RequireAuth><NavBar/></RequireAuth>}>
+              <Route path="/browse" element={<Browse/>}/>
+              <Route path="/search" element={<Search/>}/>
+            </Route>
+          </Routes>
+        </HomeContextProvider>
+      </AuthContextProvider>
+    </Router>
   )
 }
 
