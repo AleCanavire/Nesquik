@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import MoreLikeThisItem from './MoreLikeThisItem';
 
 function MoreLikeThis({ title }) {

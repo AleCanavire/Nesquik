@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { homeContext } from '../../../../context/homeContext';
+import { HomeContext } from '../../../../context/HomeContext';
 import { useGetCredits, useGetLogos, useGetTitle, useGetVideo } from '../../../../hooks/GetInfoTitle';
 import { ReactComponent as NetflixOriginals } from "../../../../assets/images/netflix-originals.svg";
 
 function TitleCard({ type, title }) {
-  const { showModal } = useContext(homeContext);
+  const { showModal } = useContext(HomeContext);
   const [backdrop, setBackdrop] = useState(null);
   const cardRef = useRef();
   const isOver = useRef(null);

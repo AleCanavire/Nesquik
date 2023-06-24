@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import ReactPlayer from 'react-player';
 import usePlayerActions from '../../../../hooks/usePlayerActions';
+import EpisodesContainer from './EpisodesContainer';
+import MoreLikeThis from './MoreLikeThis';
+import { HomeContext } from '../../../../context/HomeContext';
 import { ReactComponent as AddToMyList } from "../../../../assets/images/add.svg";
 import { ReactComponent as ThumbsUp } from "../../../../assets/images/thumbs-up.svg";
 import { ReactComponent as ThumbsUpRated } from "../../../../assets/images/thumbs-up-rated.svg";
@@ -8,12 +11,9 @@ import { ReactComponent as ThumbsDown } from "../../../../assets/images/thumbs-d
 import { ReactComponent as ThumbsDownRated } from "../../../../assets/images/thumbs-down-rated.svg";
 import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-way-up.svg";
 import { ReactComponent as ThumbsWayUpRated } from "../../../../assets/images/thumbs-way-up-rated.svg";
-import EpisodesContainer from './EpisodesContainer';
-import MoreLikeThis from './MoreLikeThis';
-import { homeContext } from '../../../../context/homeContext';
 
 function TitleDetail() {
-  const { infoTitle, closeDetail } = useContext(homeContext);
+  const { infoTitle, closeDetail } = useContext(HomeContext);
   const { isMuted, isPlaying, showTrailer, trailerDuration, isEnded, setIsPlaying, actionButton, hidePlayer,  endedTrailer } = usePlayerActions();
   const [showDetail, setShowDetail] = useState(false);
   const [metadata, setMetadata] = useState({

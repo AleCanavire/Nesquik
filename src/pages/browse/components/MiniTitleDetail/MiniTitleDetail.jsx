@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
-import { homeContext } from '../../../../context/homeContext';
+import { HomeContext } from '../../../../context/HomeContext';
 import usePlayerActions from '../../../../hooks/usePlayerActions';
 import { ReactComponent as AddToMyList } from "../../../../assets/images/add.svg";
 import { ReactComponent as ThumbsUp } from "../../../../assets/images/thumbs-up.svg";
@@ -9,10 +9,8 @@ import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-
 import { ReactComponent as NetflixOriginals } from "../../../../assets/images/netflix-originals.svg"
 
 function MiniTitleDetail() {
-  const { miniModal, showMiniModal, setShowMiniModal, position, hideModal, onAddInfo } = useContext(homeContext);
+  const { miniModal, showMiniModal, setShowMiniModal, position, hideModal, onAddInfo } = useContext(HomeContext);
   const { isMuted, isPlaying, isEnded, trailerDuration, showTrailer, actionButton, hidePlayer, endedTrailer, setShowTrailer } = usePlayerActions();
-  const [year, setYear] = useState(null);
-  const [duration, setDuration] = useState(null);
   const [metadata, setMetadata] = useState({
     year: null,
     duration: null,
@@ -40,7 +38,7 @@ function MiniTitleDetail() {
       const duration = `${hours} h ${min} min`
       setMetadata(prev => ({...prev, duration: duration}));
     }
-    //Foryou
+    // ForYou
     const number = Math.floor((Math.random() * (99 - 88)) + 88);
     setMetadata(prev => ({...prev, forYou: number}));
   }, [miniModal])
@@ -90,19 +88,9 @@ function MiniTitleDetail() {
     return () => document.removeEventListener("mousemove", handleOnHideModal);
   }, [])
 
-  const [activeDetail, setActiveDetail] = useState(false);
-  const titleDetail = {
-    position: "absolute",
-    width: "911.06px",
-    top: "2em",
-    left: "50%",
-    transform: "translateX(-50%)",
-    transition: "width 1s ease, top 1s ease, left 1s ease, transform 1s ease"
-  };
-
   return (
     <div className="mini-modal-container">
-      <div ref={miniModalRef} style={activeDetail ? titleDetail : {...positionDetail, ...showMiniStyles}} className="mini-title-detail" aria-modal={true} role="dialog">
+      <div ref={miniModalRef} style={{...positionDetail, ...showMiniStyles}} className="mini-title-detail" aria-modal={true} role="dialog">
         <div className="mini-detail-media">
           { miniModal?.video?.key &&
             <ReactPlayer

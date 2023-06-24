@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import TitleCard from './TitleCard';
-import { homeContext } from '../../../../context/homeContext';
+import { HomeContext } from '../../../../context/HomeContext';
 import { ReactComponent as PrevArrowICON } from "../../../../assets/images/prev-arrow.svg";
 import { ReactComponent as NextArrowICON } from "../../../../assets/images/next-arrow.svg";
 import TitleCardSkeleton from './TitleCardSkeleton';
 
 function RowTitlesCard({ type, url, id }) {
   const [titles, setTitles] = useState(null);
-  const { hideModal } = useContext(homeContext);
+  const { hideModal } = useContext(HomeContext);
   const [width, setWidth] = useState(window.innerWidth);
   
   useEffect(()=>{

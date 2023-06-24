@@ -9,13 +9,15 @@
    box-sizing: border-box;
 }
 
-@import "./pages/home/components/NavBar/NavBar";
-@import "./pages/home/components/Header/Header";
-@import "./pages/home/components/TitleModal/TitleModal";
-@import "./pages/home/components/TitleDetail/TitleDetail";
-@import "./pages/home/components/TitleDetail/Episodes";
-@import "./pages/home/components/TitleDetail/MoreLikeThis";
-@import "./pages/home/components/SliderTitles/RowTitlesCard";
-@import "./pages/home/components/SliderTitles/TitleCardSkeleton";
-@import "./pages/home/components/MiniTitleDetail/MiniTitleDetail";
+@import "./components/NavBar/NavBar";
+@import "./pages/login/Login";
+@import "./pages/browse/components/Header/Header";
+@import "./pages/browse/components/TitleModal/TitleModal";
+@import "./pages/browse/components/TitleDetail/TitleDetail";
+@import "./pages/browse/components/TitleDetail/Episodes";
+@import "./pages/browse/components/TitleDetail/MoreLikeThis";
+@import "./pages/browse/components/SliderTitles/RowTitlesCard";
+@import "./pages/browse/components/SliderTitles/TitleCardSkeleton";
+@import "./pages/browse/components/MiniTitleDetail/MiniTitleDetail";
 @import "./pages/search/Search";
+@import "./pages/browse/components/Profiles/Profiles"

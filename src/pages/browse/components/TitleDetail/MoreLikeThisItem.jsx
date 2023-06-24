@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGetTitle } from '../../../../hooks/GetInfoTitle';
 import { ReactComponent as AddToMyList } from "../../../../assets/images/add.svg";
 
