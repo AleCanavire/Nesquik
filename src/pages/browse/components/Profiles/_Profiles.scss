@@ -1,0 +1,135 @@
+.profiles-container{
+   background: #141414;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   text-align: center;
+   .list-profiles-container{
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      animation: animateProfiles .45s forwards;
+      .list-profiles{
+         max-width: 80%;
+         .profile-label{
+            color: #fff;
+            width: 100%;
+            font-size: 3.5vw;
+            font-weight: 400;
+            margin: revert;
+         }
+         .choose-profile{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0 2vw;
+            margin: 2em 0;
+            .profile{
+               width: 10vw;
+               max-width: 200px;
+               min-width: 84px;
+               cursor: pointer;
+               &:hover > .avatar-wrapper::after{
+                  border: 0.3em solid #e5e5e5;
+               }
+               &:hover > .profile-name{
+                  color: #e5e5e5;
+               }
+               .avatar-wrapper{
+                  position: relative;
+                  width: 10vw;
+                  height: 10vw;
+                  max-width: 200px;
+                  max-height: 200px;
+                  min-width: 84px;
+                  min-height: 84px;
+                  border-radius: 4px;
+                  overflow: hidden;
+                  box-sizing: border-box;
+                  &::after{
+                     content: "";
+                     position: absolute;
+                     top: 0;
+                     left: 0;
+                     right: 0;
+                     bottom: 0;
+                     border: 0.3em solid transparent;
+                  }
+                  img{
+                     width: 100%;
+                     height: 100%;
+                  }
+               }
+               .profile-name{
+                  color: grey;
+                  display: block;
+                  min-height: 1.8em;
+                  margin: 0.6em 0;
+                  font-size: 1.3vw;
+                  font-weight: 300;
+                  line-height: 1.2em;
+                  text-align: center;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+               }
+            }
+         }
+      }
+      .profile-button{
+         color: grey;
+         background-color: transparent;
+         display: block;
+         margin: 2em 0 1em;
+         padding: 0.5em 1.5em;
+         font-size: 1.2vw;
+         font-weight: 300;
+         border: 1px solid grey;
+         cursor: pointer;
+         &:hover{
+            color: #fff;
+            border: 1px solid #fff;
+         }
+      }
+   }
+}
+
+@keyframes animateProfiles {
+   0% {
+      opacity: 0;
+      transform: scale(1.1);
+   }
+   100% {
+         opacity: 1;
+         transform: scale(1);
+   }
+}
+
+@media (min-width: 1660px){
+   .profiles-container .list-profiles-container .list-profiles .choose-profile .profile .profile-name{
+      font-size: 24px;
+   }
+}
+
+@media (max-width: 800px){
+   .profiles-container .list-profiles-container {
+      .list-profiles{
+         .profile-label{
+            font-size: 30px;
+         }
+         .choose-profile .profile .profile-name{
+            font-size: 12px;
+         }
+      }
+      .profile-button{
+         font-size: 13px;
+      }
+   }
+}
