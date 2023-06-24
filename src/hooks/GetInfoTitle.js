@@ -82,23 +82,45 @@ export function useGetCredits(type, id) {
 }
 
 export function useGetTrending() {
-  const [title, setTitle] = useState(null);
+  const [header, setHeader] = useState(null);
+
+  const title = useGetTitle(header?.type, header?.id);
+  const video = useGetVideo(header?.type, header?.id);
+  const logo = useGetLogos(header?.type, header?.id);
+  const credits = useGetCredits(header?.type, header?.id);
 
   useEffect(()=>{
-    const randomNumber = Math.trunc(Math.random() * 2) + 1;
-    const url = randomNumber === 1
-                ? "https://api.themoviedb.org/3/discover/tv?api_key=4c42277c85a8a8f307d358420965071c&with_networks=213&language=es-ES&page=2"
-                : "https://api.themoviedb.org/3/discover/movie?api_key=4c42277c85a8a8f307d358420965071c&with_watch_providers=8&watch_region=AR&language=es-ES";
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      const randomTitle = Math.trunc(Math.random() * 20);
-      const titleSelected = data.results[randomTitle];
-        const type = randomNumber === 1 ? "tv" : "movie";
-        setTitle({...titleSelected, type: type});
+    fetch("https://api.themoviedb.org/3/discover/tv?api_key=4c42277c85a8a8f307d358420965071c&with_networks=213&language=es-ES&page=2")
+      .then(response => response.json())
+      .then(data => {
+        const randomTitle = Math.trunc(Math.random() * 20);
+        const titleSelected = data.results[randomTitle];
+        setHeader({...titleSelected, type: "tv"});
       })
       .catch((error) => console.log(error));
   }, [])
 
-  return title
+  const storedHeader = sessionStorage.getItem("title-header");
+  if (storedHeader) {
+    return JSON.parse(storedHeader);
+  } else if (title && video && logo && credits) {
+    sessionStorage.setItem("title-header", JSON.stringify({ 
+                                                            ...title,
+                                                            video,
+                                                            logo,
+                                                            cast: credits?.cast,
+                                                            crew: credits?.crew  
+                                                          }
+    ))
+  }
+
+  return (
+    { 
+      ...title,
+      video,
+      logo,
+      cast: credits?.cast,
+      crew: credits?.crew  
+    }
+  )
 }
