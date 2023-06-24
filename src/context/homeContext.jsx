@@ -1,6 +1,7 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
-export const homeContext = createContext();
+export const HomeContext = createContext();
 
 export function HomeContextProvider({ children }) {
   const [infoTitle, setInfoTitle] = useState(null);
@@ -8,10 +9,31 @@ export function HomeContextProvider({ children }) {
   const [showMiniModal, setShowMiniModal] = useState(false);
   const [position, setPosition] = useState(null);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    if (search === ""){
+      navigate("/browse");
+    } else{
+      setTimeout(() => {
+        navigate("/search");
+      }, 300);
+    }
+  }, [search, navigate])
+
+  useEffect(()=>{
+    if (infoTitle) {
+      const titleName = infoTitle.title || infoTitle.original_title || infoTitle.name || infoTitle.original_name;
+      document.title = `${titleName} - Nesquik`
+    } else {
+      document.title = "Home - Nesquik"
+    }
+  }, [infoTitle])
 
   function onAddInfo(data) {
-    document.querySelector(".home-container").style =  `position: fixed;
+    document.querySelector(".main-view").style =  `position: fixed;
                                                         top:  -${window.scrollY}px;
+                                                        width: 100%;
                                                         overflow: visible;`;
     window.scrollTo(0, 0);
     setInfoTitle(data);
@@ -28,8 +50,8 @@ export function HomeContextProvider({ children }) {
   }
 
   function closeDetail() {
-    const top = document.querySelector(".home-container").style.top.slice(1, -2);
-    document.querySelector(".home-container").style = null;
+    const top = document.querySelector(".main-view").style.top.slice(1, -2);
+    document.querySelector(".main-view").style = null;
     window.scrollTo(0, top);
     setInfoTitle(null);
   }
@@ -47,11 +69,11 @@ export function HomeContextProvider({ children }) {
   }
 
   return(
-		<homeContext.Provider
+		<HomeContext.Provider
     value={{  infoTitle, miniModal, showMiniModal, position, search,
               onAddInfo, onAddMiniInfo, closeDetail, showModal, hideModal, setShowMiniModal, setInfoTitle, setSearch }}>
 			{ children }
-		</homeContext.Provider>
+		</HomeContext.Provider>
 	)
 }
 
