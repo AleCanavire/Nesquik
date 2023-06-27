@@ -3,8 +3,10 @@ import ReactPlayer from 'react-player';
 import usePlayerActions from '../../../../hooks/usePlayerActions';
 import EpisodesContainer from './EpisodesContainer';
 import MoreLikeThis from './MoreLikeThis';
+import { AuthContext } from '../../../../context/AuthContext';
 import { HomeContext } from '../../../../context/HomeContext';
 import { ReactComponent as AddToMyList } from "../../../../assets/images/add.svg";
+import { ReactComponent as AddedToMyList } from "../../../../assets/images/added.svg";
 import { ReactComponent as ThumbsUp } from "../../../../assets/images/thumbs-up.svg";
 import { ReactComponent as ThumbsUpRated } from "../../../../assets/images/thumbs-up-rated.svg";
 import { ReactComponent as ThumbsDown } from "../../../../assets/images/thumbs-down.svg";
@@ -13,9 +15,11 @@ import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-
 import { ReactComponent as ThumbsWayUpRated } from "../../../../assets/images/thumbs-way-up-rated.svg";
 
 function TitleDetail() {
+  const { activeProfile, setActiveProfile } = useContext(AuthContext);
   const { infoTitle, closeDetail } = useContext(HomeContext);
   const { isMuted, isPlaying, showTrailer, trailerDuration, isEnded, setIsPlaying, actionButton, hidePlayer,  endedTrailer } = usePlayerActions();
   const [showDetail, setShowDetail] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
   const [metadata, setMetadata] = useState({
     year: null,
     duration: null,
@@ -79,6 +83,28 @@ function TitleDetail() {
     return () => document.removeEventListener("click", closeDetail);
   }, [])
 
+  useEffect(()=>{
+    const inMyList = activeProfile.my_list.find(title => title.id === infoTitle.id);
+    if (inMyList) {
+      setIsAdded(true);
+    }
+  }, [activeProfile])
+
+  function myListAction(){
+    if (isAdded) {
+      setIsAdded(false);
+    } else{
+      setIsAdded(true);
+      setActiveProfile(prev => ({
+        ...prev,
+        my_list: [
+          infoTitle,
+          ...activeProfile.my_list
+        ]
+      }))
+    }
+  }
+
   return (
     <>
       <div className="title-detail-container">
@@ -88,7 +114,7 @@ function TitleDetail() {
               { infoTitle?.video?.key &&
                 <ReactPlayer
                   className="title-player"
-                  style={infoTitle?.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.25)"}}
+                  style={infoTitle?.type === "movie" ? {transform: "scale(1.4)"} : {transform: "scale(1.35)"}}
                   url={`https://www.youtube.com/watch?v=${infoTitle.video.key}`}
                   width="100%"
                   height="100%"
@@ -117,10 +143,10 @@ function TitleDetail() {
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="Hawkins-Icon Hawkins-Icon-Standard"><path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"></path></svg>
                   <span>Reproducir</span>
                 </button>
-                <button className="my-list">
-                  <AddToMyList/>
+                <button onClick={myListAction} className="my-list">
+                  { isAdded ? <AddedToMyList/> : <AddToMyList/> }
                   <div className="my-list-tooltip">
-                    Agregar a Mi lista
+                    { isAdded ? "Quitar de Mi lista": "Agregar a Mi lista" }
                   </div>
                 </button>
                 <button className="thumbs-rate">

@@ -30,7 +30,29 @@ export function AuthContextProvider({ children }) {
     if (user) {
       navigate("/browse");
     }
+    const updateUserActive = async() => {
+      await updateUser(user);
+    }
+    if (user) {
+      updateUserActive();
+    }
   }, [user])
+
+  useEffect(()=>{
+    const update = async() => {
+      const indexProfile = user.profiles.findIndex(profile => profile.id === activeProfile.id);
+
+      setUser(prev => {
+        const profilesCopy = [...prev.profiles];
+        profilesCopy.splice(indexProfile, 1, activeProfile);
+        return {...prev, profiles: profilesCopy}
+      })
+      
+    }
+    if (activeProfile) {
+      update();
+    }
+  }, [activeProfile])
 
   useEffect(()=>{
     const handleUserChanged = onAuthStateChanged(auth, async(currentUser) => {
@@ -45,14 +67,14 @@ export function AuthContextProvider({ children }) {
             mainUser: currentUser.displayName,
             profiles: [
               {
-                index: 1,
+                id: 1,
                 profile_name: currentUser.displayName,
                 profile_icon: "./images/profile1.png",
-                myList: []
+                my_list: []
               }
             ]
           }
-          await updateUser(newUser)
+          await updateUser(newUser);
           setUser(newUser);
         }
       } else {

@@ -14,7 +14,7 @@ function Profiles() {
           <ul className="choose-profile">
             { user?.profiles?.map(profile => {
                 return(
-                  <li className="profile" onClick={() => setActiveProfile(profile)} key={profile.index}>
+                  <li className="profile" onClick={() => setActiveProfile(profile)} key={profile.id}>
                     <div className="avatar-wrapper">
                       <img src={profile.profile_icon} alt={`${profile.profile_name} Icon`} />
                     </div>
