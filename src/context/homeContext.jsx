@@ -1,5 +1,6 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
 
 export const HomeContext = createContext();
 
@@ -9,12 +10,13 @@ export function HomeContextProvider({ children }) {
   const [showMiniModal, setShowMiniModal] = useState(false);
   const [position, setPosition] = useState(null);
   const [search, setSearch] = useState("");
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(()=>{
-    if (search === ""){
+    if (user && !search){
       navigate("/browse");
-    } else{
+    } else if (user && search){
       setTimeout(() => {
         navigate("/search");
       }, 300);
