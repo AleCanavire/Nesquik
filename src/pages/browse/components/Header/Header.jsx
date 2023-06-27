@@ -69,7 +69,10 @@ function Header() {
             <img
               className="header-backdrop"
               style={showTrailer ? {opacity: "0"} : {}}
-              src={`https://image.tmdb.org/t/p/${window.innerWidth > 1280 ? "original" : "w1280"}${title.backdrop_path}`}
+              srcSet={`https://image.tmdb.org/t/p/w300${title.backdrop_path} 300w,
+                      https://image.tmdb.org/t/p/w780${title.backdrop_path} 780w,
+                      https://image.tmdb.org/t/p/w1280${title.backdrop_path} 1280w,
+                      https://image.tmdb.org/t/p/original${title.backdrop_path}`}
               alt={title?.title}
             />
           }
