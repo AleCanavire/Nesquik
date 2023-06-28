@@ -28,7 +28,7 @@ function Episode({ season, episode, type, id }) {
       <div className="title-card-image">
         { episodeData?.still_path &&
           <img
-            src={`https://image.tmdb.org/t/p/w185${episodeData?.still_path}`}
+            src={`https://image.tmdb.org/t/p/w185${episodeData.still_path}`}
             alt={episodeData?.name}
             loading="lazy"
           />
@@ -39,14 +39,16 @@ function Episode({ season, episode, type, id }) {
       </div>
       <div className="title-card-metadata">
         <div className="title-card-title">
-          <span className="title">{episodeData?.name}</span>
-          <span className="title-duration">{`${episodeData?.runtime} min`}</span>
+          <span className="title">
+            {episodeData?.name}
+          </span>
+          <span className="title-duration">
+            {`${episodeData?.runtime} min`}
+          </span>
         </div>
-        { episodeData?.overview &&
-          <p className="title-card-sypnosis">
-            {episodeData?.overview}
-          </p>
-        }
+        <p className="title-card-sypnosis">
+          {episodeData?.overview}
+        </p>
       </div>
     </div>
   )

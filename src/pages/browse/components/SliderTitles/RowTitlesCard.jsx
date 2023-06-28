@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Slider from 'react-slick';
-import TitleCard from './TitleCard';
 import { HomeContext } from '../../../../context/HomeContext';
+import TitleCard from './TitleCard';
+import TitleCardSkeleton from './TitleCardSkeleton';
 import { ReactComponent as PrevArrowICON } from "../../../../assets/images/prev-arrow.svg";
 import { ReactComponent as NextArrowICON } from "../../../../assets/images/next-arrow.svg";
-import TitleCardSkeleton from './TitleCardSkeleton';
 
 function RowTitlesCard({ type, url, id }) {
   const [titles, setTitles] = useState(null);

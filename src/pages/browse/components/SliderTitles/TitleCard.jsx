@@ -49,11 +49,8 @@ function TitleCard({ type, title }) {
     <div className="title-card-wrapper">
       <div ref={cardRef} className="title-card">
         <div className="title-media">
-          { titleData?.networks?.map(network => {
-              if (network.id === 213) {
-                return <NetflixOriginals key={network}/>
-              }
-            })
+          { titleData?.networks?.find(title => title.id === 213) &&
+            <NetflixOriginals/>
           }
           { backdrop?.file_path &&
             <img

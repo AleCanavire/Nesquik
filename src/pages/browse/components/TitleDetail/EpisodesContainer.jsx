@@ -30,7 +30,7 @@ function EpisodesContainer({ title }) {
         </div>
         { title.seasons.length > 1
           ? <div className="episode-selector-dropdown">
-              <button onClick={()=> setShowMenu(prev => !prev)} className="dropdown-toggle">
+              <button className="dropdown-toggle" onClick={()=> setShowMenu(prev => !prev)}>
                 {`Temporada ${season}`}
               </button>
               { showMenu && 
@@ -38,9 +38,11 @@ function EpisodesContainer({ title }) {
                   { title.seasons.map((season, index) => {
                     if(season.episode_count && season.air_date)
                     return(
-                      <li onClick={()=> selectSeason(season.season_number)} className="dropdown-menu-item" key={index}>
+                      <li className="dropdown-menu-item" onClick={()=> selectSeason(season.season_number)} key={index}>
                         {`Temporada ${season.season_number}  `}
-                        <span className="num-episodes">{`(${season.episode_count} episodios)`}</span>
+                        <span className="num-episodes">
+                          {`(${season.episode_count} episodios)`}
+                        </span>
                       </li>
                     )})
                   }
@@ -51,7 +53,6 @@ function EpisodesContainer({ title }) {
               {title.title || title.original_title || title.name || title.original_name}
             </div>
         }
-        
       </div>
       <div className="episodes-selector-body">
         { episodes?.map(episode => {
