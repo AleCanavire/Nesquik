@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { HomeContext } from '../../../../context/HomeContext';
 import usePlayerActions from '../../../../hooks/usePlayerActions';
+import { getDuration, getForYou, getYear } from '../../../../services/getMetadata';
 import { ReactComponent as AddToMyList } from "../../../../assets/images/add.svg";
 import { ReactComponent as ThumbsUp } from "../../../../assets/images/thumbs-up.svg";
 import { ReactComponent as ThumbsDown } from "../../../../assets/images/thumbs-down.svg";
@@ -14,7 +15,6 @@ function MiniTitleDetail() {
   const [metadata, setMetadata] = useState({
     year: null,
     duration: null,
-    genres: null,
     forYou: null
   });
   const miniModalRef = useRef();
@@ -22,29 +22,14 @@ function MiniTitleDetail() {
   useEffect(()=>{
     setShowMiniModal(true);
 
-    //YEAR
-    const year = miniModal.first_air_date?.split("-")[0] || miniModal.release_date?.split("-")[0]
-    setMetadata(prev => ({...prev, year: year}));
-
-    // DURATION
-    if (miniModal.type === "tv") {
-      const duration =  miniModal.number_of_seasons > 1
-                        ? `${miniModal.number_of_seasons} temporadas`
-                        : `${miniModal.number_of_episodes} episodios`
-      setMetadata(prev => ({...prev, duration: duration}));
-    } else if (miniModal.type === "movie") {
-      const hours = Math.floor(miniModal.runtime / 60);
-      const min = miniModal.runtime % 60;
-      const duration = `${hours} h ${min} min`
-      setMetadata(prev => ({...prev, duration: duration}));
-    }
-    // ForYou
-    const number = Math.floor((Math.random() * (99 - 88)) + 88);
-    setMetadata(prev => ({...prev, forYou: number}));
+    getYear(miniModal, setMetadata);
+    getDuration(miniModal, setMetadata);
+    getForYou(setMetadata);
   }, [miniModal])
 
   const showMiniStyles = {
-    transform: showMiniModal ? `translateY(calc(${position.height / 2}px - 50%))` : "scale(.665)",
+    transform: showMiniModal  ? `translateY(calc(${position.height / 2}px - 50%))`
+                              : "scale(.665)",
     boxShadow: showMiniModal ? "rgba(0 0 0 / 75%) 0px 3px 10px": "",
   }
 
@@ -73,10 +58,6 @@ function MiniTitleDetail() {
     }
   }, [])
 
-  function handleOnAddInfo() {
-    onAddInfo(miniModal);
-  }
-
   useEffect(()=>{
     function handleOnHideModal(e) {
       if (!miniModalRef?.current?.contains(e.target)){
@@ -88,9 +69,13 @@ function MiniTitleDetail() {
     return () => document.removeEventListener("mousemove", handleOnHideModal);
   }, [])
 
+  function handleOnAddInfo() {
+    onAddInfo(miniModal);
+  }
+
   return (
     <div className="mini-modal-container">
-      <div ref={miniModalRef} style={{...positionDetail, ...showMiniStyles}} className="mini-title-detail" aria-modal={true} role="dialog">
+      <div className="mini-title-detail" style={{...positionDetail, ...showMiniStyles}} ref={miniModalRef} aria-modal={true} role="dialog">
         <div className="mini-detail-media">
           { miniModal?.video?.key &&
             <ReactPlayer
@@ -136,15 +121,12 @@ function MiniTitleDetail() {
                 src={`https://image.tmdb.org/t/p/w185${miniModal.logo.file_path}`}
               />
             }
-            { miniModal?.networks?.map(network => {
-                if (network.id === 213) {
-                  return <NetflixOriginals key={network}/>
-                }
-              })
+            { miniModal?.networks?.find(title => title.id === 213) &&
+              <NetflixOriginals/>
             }
           </div>
         </div>
-        <div style={showMiniModal ? {opacity: "1"} : {opacity: "0"}} className="mini-detail-info">
+        <div className="mini-detail-info" style={showMiniModal ? {opacity: "1"} : {opacity: "0"}}>
           <div className="metadata-and-controls">
             <div className="button-controls">
               <button className="play-button button-control">
@@ -152,7 +134,9 @@ function MiniTitleDetail() {
               </button>
               <button className="my-list button-control">
                 <AddToMyList/>
-                <div className="my-list-tooltip">Agregar a Mi lista</div>
+                <div className="my-list-tooltip">
+                  Agregar a Mi lista
+                </div>
               </button>
               <button className="thumbs-rate button-control">
                 <ThumbsUp className="your-rate"/>
@@ -183,7 +167,7 @@ function MiniTitleDetail() {
               </button>
             </div>
             <div className="metadata-info">
-              <span className="match-score">{metadata?.forYou} % para ti</span>
+              <span className="match-score">{`${metadata?.forYou} % para ti`}</span>
               <span className="title-year">{metadata?.year}</span>
               <span className="title-duration">{metadata?.duration}</span>
               <span className="title-quality">HD</span>
@@ -193,15 +177,15 @@ function MiniTitleDetail() {
             { miniModal.genres.slice(0, 3).map((genre, index) => {
               return(
                 index !== 0
-                  ? <React.Fragment key={index}>
-                      <span className="tag-divider">•</span>
-                      <span className="title-tag-item">
-                        {genre.name}
-                      </span>
-                    </React.Fragment>
-                  : <span key={index} className="title-tag-item">
+                ? <React.Fragment key={index}>
+                    <span className="tag-divider">•</span>
+                    <span className="title-tag-item">
                       {genre.name}
                     </span>
+                  </React.Fragment>
+                : <span key={index} className="title-tag-item">
+                    {genre.name}
+                  </span>
               )})
             }
             </div>

@@ -13,6 +13,7 @@ import { ReactComponent as ThumbsDown } from "../../../../assets/images/thumbs-d
 import { ReactComponent as ThumbsDownRated } from "../../../../assets/images/thumbs-down-rated.svg";
 import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-way-up.svg";
 import { ReactComponent as ThumbsWayUpRated } from "../../../../assets/images/thumbs-way-up-rated.svg";
+import { getCast, getCrew, getDuration, getForYou, getGenres, getYear } from '../../../../services/getMetadata';
 
 function TitleDetail() {
   const { activeProfile, setActiveProfile } = useContext(AuthContext);
@@ -33,54 +34,12 @@ function TitleDetail() {
   useEffect(()=>{
     setShowDetail(true);
 
-    //YEAR
-    const year = infoTitle?.first_air_date?.split("-")[0] || infoTitle?.release_date?.split("-")[0]
-    setMetadata(prev => ({...prev, year: year}));
-
-    // DURATION
-    if (infoTitle.type === "tv") {
-      const duration =  infoTitle?.number_of_seasons > 1
-                        ? `${infoTitle?.number_of_seasons} temporadas`
-                        : `${infoTitle?.number_of_episodes} episodios`;
-      setMetadata(prev => ({...prev, duration: duration}));
-    } else if (infoTitle.type === "movie") {
-      const hours = Math.floor(infoTitle.runtime / 60);
-      const min = infoTitle.runtime % 60;
-      const duration = `${hours} h ${min} min`
-      setMetadata(prev => ({...prev, duration: duration}));
-    }
-    
-    // CAST
-    const cast = infoTitle.cast.slice(0, 3).map(actor => actor.name);
-    setMetadata(prev => ({...prev, cast: cast}));
-
-    // GENRES
-    const genres = infoTitle.genres.map(genre => genre.name);
-    setMetadata(prev => ({...prev, genres: genres}));
-
-    // CREW
-    const crew = infoTitle.crew.slice(0, 3).map(person => person.name);
-    setMetadata(prev => ({...prev, crew: crew}));
-
-    // For You
-    const number = Math.floor((Math.random() * (99 - 88)) + 88);
-    setMetadata(prev => ({...prev, forYou: number}));
-  }, [])
-
-  function handleCloseDetail() {
-    setIsPlaying(false);
-    setShowDetail(false);
-    setTimeout(closeDetail, 500);
-  }
-  useEffect(()=>{
-    function closeDetail(e) {
-      if (document.querySelector(".title-detail-backdrop").contains(e.target)){
-        handleCloseDetail();
-      }
-    }
-
-    document.addEventListener("click", closeDetail);
-    return () => document.removeEventListener("click", closeDetail);
+    getYear(infoTitle, setMetadata);
+    getDuration(infoTitle, setMetadata);
+    getCast(infoTitle, setMetadata);
+    getGenres(infoTitle, setMetadata);
+    getCrew(infoTitle, setMetadata);
+    getForYou(setMetadata);
   }, [])
 
   useEffect(()=>{
@@ -90,9 +49,24 @@ function TitleDetail() {
     }
   }, [activeProfile])
 
+  function handleCloseDetail() {
+    setIsPlaying(false);
+    setShowDetail(false);
+    setTimeout(closeDetail, 500);
+  }
+
   function myListAction(){
     if (isAdded) {
       setIsAdded(false);
+      const indexTitle = activeProfile.my_list.findIndex(title => title.id === infoTitle.id);
+      setActiveProfile(prev => {
+        const myListCopy = [...prev.my_list];
+        myListCopy.splice(indexTitle, 1);
+        return {
+          ...prev,
+          my_list: myListCopy
+        }
+      })
     } else{
       setIsAdded(true);
       setActiveProfile(prev => ({
@@ -301,6 +275,7 @@ function TitleDetail() {
         </div>
       </div>
       <div
+        onClick={handleCloseDetail}
         style={showDetail ? {opacity: "0.7"} : {opacity: "0"}}
         className="title-detail-backdrop"
       />
