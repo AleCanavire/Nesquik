@@ -6,6 +6,7 @@ import LazyRowTitles from './components/SliderTitles/LazyRowTitles';
 import Profiles from './components/Profiles/Profiles';
 import MiniTitleDetail from './components/MiniTitleDetail/MiniTitleDetail';
 import TitleDetail from './components/TitleDetail/TitleDetail';
+import Footer from '../../components/Footer/Footer';
 
 function Home() {
   const { activeProfile } = useContext(AuthContext);
@@ -81,6 +82,7 @@ function Home() {
         }
         
       </div>
+      <Footer/>
       { miniModal &&
         <MiniTitleDetail/>
       }

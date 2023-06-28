@@ -3,6 +3,7 @@ import { HomeContext } from '../../context/HomeContext'
 import TitleCard from '../browse/components/SliderTitles/TitleCard';
 import MiniTitleDetail from '../browse/components/MiniTitleDetail/MiniTitleDetail';
 import TitleDetail from '../browse/components/TitleDetail/TitleDetail';
+import Footer from '../../components/Footer/Footer';
 
 function Search() {
   const { search, miniModal, infoTitle } = useContext(HomeContext);
@@ -65,6 +66,7 @@ function Search() {
           </div>
         </div>
       </div>
+      <Footer/>
       { miniModal &&
         <MiniTitleDetail/>
       }
