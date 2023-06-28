@@ -175,9 +175,6 @@
                      width: 25px;
                      height: 25px;
                      transform: translate(-50%, -50%) rotate(0deg);
-                     background-image: url("./images/spinner.png");
-                     background-repeat: no-repeat;
-                     background-size: cover;
                      border-radius: 50%;
                      animation: animateSpinner 1s linear infinite;
                      @keyframes animateSpinner {
@@ -284,6 +281,10 @@
                margin-bottom: 16px;
                vertical-align: top;
                line-height: normal;
+               span:hover{
+                  text-decoration: underline;
+                  cursor: pointer;
+               }
             }
          }
          .select-wrapper{

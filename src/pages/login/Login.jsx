@@ -4,6 +4,7 @@ import { UserAuth } from '../../context/AuthContext';
 import { ReactComponent as NetflixLogo } from "../../assets/images/nesquik.svg";
 import { ReactComponent as GlobeIcon } from "../../assets/images/globe.svg";
 import { ReactComponent as ArrowDown } from "../../assets/images/arrow-select.svg";
+import { ReactComponent as Spinner } from "../../assets/images/spinner.svg";
 
 function Login() {
   const { googleSignIn } = UserAuth();
@@ -58,7 +59,7 @@ function Login() {
               <div className="btn-content">
                 Iniciar sesión
                 { loading
-                  ? <div className="loading-indicator"/>
+                  ? <Spinner className="loading-indicator"/>
                   : <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="bi bi-google" viewBox="0 0 16 16"> <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" fill="white"></path></svg>
                 }
               </div>
@@ -83,12 +84,12 @@ function Login() {
         <div className="login-footer">
           <p className="footer-top">¿Preguntas? Llama a <a href="https://www.linkedin.com/in/alexander-canavire/" target="blank">Alexander Canavire</a></p>
           <ul className="footer-links">
-            <li className="footer-link-item">Preguntas frecuentes</li>
-            <li className="footer-link-item">Centro de ayuda</li>
-            <li className="footer-link-item">Términos de uso</li>
-            <li className="footer-link-item">Privacidad</li>
-            <li className="footer-link-item">Preferencias de cookies</li>
-            <li className="footer-link-item">Información corporativa</li>
+            <li className="footer-link-item"><span>Preguntas frecuentes</span></li>
+            <li className="footer-link-item"><span>Centro de ayuda</span></li>
+            <li className="footer-link-item"><span>Términos de uso</span></li>
+            <li className="footer-link-item"><span>Privacidad</span></li>
+            <li className="footer-link-item"><span>Preferencias de cookies</span></li>
+            <li className="footer-link-item"><span>Información corporativa</span></li>
           </ul>
           <div className="select-wrapper">
             <div className="select-arrow">
