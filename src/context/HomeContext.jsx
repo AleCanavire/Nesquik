@@ -10,7 +10,7 @@ export function HomeContextProvider({ children }) {
   const [showMiniModal, setShowMiniModal] = useState(false);
   const [position, setPosition] = useState(null);
   const [search, setSearch] = useState("");
-  const { user } = useContext(AuthContext);
+  const { user, activeProfile } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -24,19 +24,19 @@ export function HomeContextProvider({ children }) {
   }, [search, navigate])
 
   useEffect(()=>{
-    if (infoTitle) {
+    if (activeProfile && infoTitle) {
       const titleName = infoTitle.title || infoTitle.original_title || infoTitle.name || infoTitle.original_name;
-      document.title = `${titleName} - Nesquik`
-    } else {
-      document.title = "Home - Nesquik"
+      document.title = `${titleName} — Nesquik`
+    } else if (activeProfile && !infoTitle) {
+      document.title = "Página de inicio — Nesquik"
     }
-  }, [infoTitle])
+  }, [activeProfile, infoTitle])
 
   function onAddInfo(data) {
     document.querySelector(".main-view").style =  `position: fixed;
-                                                        top:  -${window.scrollY}px;
-                                                        width: 100%;
-                                                        overflow: visible;`;
+                                                  top:  -${window.scrollY}px;
+                                                  width: 100%;
+                                                  overflow: visible;`;
     window.scrollTo(0, 0);
     setInfoTitle(data);
   }

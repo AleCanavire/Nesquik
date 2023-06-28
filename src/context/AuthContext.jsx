@@ -27,14 +27,15 @@ export function AuthContextProvider({ children }) {
   }
 
   useEffect(()=>{
-    if (user) {
-      navigate("/browse");
-    }
     const updateUserActive = async() => {
       await updateUser(user);
     }
+    
     if (user) {
+      navigate("/browse");
       updateUserActive();
+    } else {
+      document.title = "Nesquik"
     }
   }, [user])
 
