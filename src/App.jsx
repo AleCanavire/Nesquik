@@ -9,6 +9,8 @@ import NavBar from './components/NavBar/NavBar';
 import Browse from './pages/browse/Browse';
 import Search from './pages/search/Search';
 import RequireAuth from './components/RequireAuth/RequireAuth';
+import Profiles from './pages/profiles/Profiles';
+import ManageProfiles from './pages/profiles/components/ManageProfiles/ManageProfiles';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Routes>
             <Route path="/" element={<div>home</div>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/profiles" element={<Profiles/>}/>
+            <Route path="/profiles/manage" element={<ManageProfiles/>}/>
             <Route path="/" element={<RequireAuth><NavBar/></RequireAuth>}>
               <Route path="/browse" element={<Browse/>}/>
               <Route path="/search" element={<Search/>}/>
