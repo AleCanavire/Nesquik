@@ -21,8 +21,9 @@ function RowTitlesCard({ type, url, id }) {
       fetch(`https://api.themoviedb.org/3/discover/${type}?api_key=4c42277c85a8a8f307d358420965071c${url}`)
         .then(response => response.json())
         .then(data =>{
+          const titles = data.results.filter(title => title.overview)
           setTimeout(()=>{
-            setTitles(data.results);
+            setTitles(titles);
           }, 3600)
           sessionStorage.setItem(id, JSON.stringify(data.results));
         })
