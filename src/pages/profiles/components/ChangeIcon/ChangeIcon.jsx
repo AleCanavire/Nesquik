@@ -27,9 +27,8 @@ function ChangeIcon({ profile }) {
         <ul className="list-container">
           { icons.map(title => {
             return(
-              <li className="slider-row">
+              <li className="slider-row" key={title.name}>
                 <RowIcons
-                  key={title.name}
                   title={title}
                 />
               </li>

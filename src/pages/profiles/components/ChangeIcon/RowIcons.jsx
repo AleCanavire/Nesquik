@@ -5,7 +5,7 @@ import { ReactComponent as NextArrowICON } from "../../../../assets/images/next-
 import { AuthContext } from '../../../../context/AuthContext';
 
 function RowIcons({ title }) {
-  const { user, setUser, profileSettings, setProfileSettings, setShowIcons } = useContext(AuthContext);
+  const { profileSettings, setProfileSettings, setShowIcons } = useContext(AuthContext);
   const [width, setWidth] = useState(window.innerWidth);
 
   let slidesToShow;
@@ -71,7 +71,7 @@ function RowIcons({ title }) {
         <>
           <h2 className="row-header">
             { title.logo
-              ? <div style={{backgroundImage: `url(${title.logo})`}} className="row-icon"/>
+              ? <div className="row-icon" style={{backgroundImage: `url(${title.logo})`}}/>
               : <div className="row-text">{title.name.replace("-", " ")}</div>
             }
           </h2>
