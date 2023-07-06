@@ -10,13 +10,13 @@ export function HomeContextProvider({ children }) {
   const [showMiniModal, setShowMiniModal] = useState(false);
   const [position, setPosition] = useState(null);
   const [search, setSearch] = useState("");
-  const { user, activeProfile } = useContext(AuthContext);
+  const { activeProfile } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(()=>{
-    if (user && !search){
+    if (activeProfile && !search){
       navigate("/browse");
-    } else if (user && search){
+    } else if (activeProfile && search){
       setTimeout(() => {
         navigate("/search");
       }, 300);
