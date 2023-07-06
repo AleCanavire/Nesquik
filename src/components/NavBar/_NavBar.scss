@@ -221,8 +221,10 @@
                      font-weight: 300;
                      padding: 5px 10px;
                      .item-link{
+                        color: #fff;
                         display: flex;
                         align-items: center;
+                        text-decoration: none;
                         cursor: pointer;
                         &:hover > span{
                            text-decoration: underline;
