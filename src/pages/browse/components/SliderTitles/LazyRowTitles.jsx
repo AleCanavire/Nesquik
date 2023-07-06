@@ -29,7 +29,7 @@ function LazyRowTitles({ section, type, url, id }) {
   return (
     <section id={id} className="row-title-card">
       <h2 className="row-title-header">
-        <a className="row-title" href="#">
+        <a className="row-title" href="/browse">
           <div className="title">
             {section}
           </div>

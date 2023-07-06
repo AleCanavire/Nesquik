@@ -33,12 +33,16 @@ export function HomeContextProvider({ children }) {
   }, [activeProfile, infoTitle])
 
   function onAddInfo(data) {
-    document.querySelector(".main-view").style =  `position: fixed;
-                                                  top:  -${window.scrollY}px;
-                                                  width: 100%;
-                                                  overflow: visible;`;
-    window.scrollTo(0, 0);
-    setInfoTitle(data);
+    setShowMiniModal(false);
+    setTimeout(() => {
+      setMiniModal(null);
+      document.querySelector(".main-view").style = `position: fixed;
+                                                    top:  -${window.scrollY}px;
+                                                    width: 100%;
+                                                    overflow: visible;`;
+      window.scrollTo(0, 0);
+      setInfoTitle(data);
+    }, 300);
   }
   function onAddMiniInfo(title, logo, video, backdrop, credits) {
     setMiniModal({

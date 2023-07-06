@@ -58,22 +58,19 @@ function TitleDetail() {
   function myListAction(){
     if (isAdded) {
       setIsAdded(false);
-      const indexTitle = activeProfile.my_list.findIndex(title => title.id === infoTitle.id);
-      setActiveProfile(prev => {
-        const myListCopy = [...prev.my_list];
-        myListCopy.splice(indexTitle, 1);
-        return {
+      setActiveProfile(prev => (
+        {
           ...prev,
-          my_list: myListCopy
+          my_list: prev.my_list.filter(title => title.id !== infoTitle.id)
         }
-      })
+      ))
     } else{
       setIsAdded(true);
       setActiveProfile(prev => ({
         ...prev,
         my_list: [
-          infoTitle,
-          ...activeProfile.my_list
+          ...prev.my_list,
+          infoTitle
         ]
       }))
     }

@@ -1,33 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Slider from 'react-slick';
+import { AuthContext } from '../../../../context/AuthContext';
 import { HomeContext } from '../../../../context/HomeContext';
 import TitleCard from './TitleCard';
-import TitleCardSkeleton from './TitleCardSkeleton';
+import { ReactComponent as ArrowRowTitle } from "../../../../assets/images/arrow-row-title.svg"
 import { ReactComponent as PrevArrowICON } from "../../../../assets/images/prev-arrow.svg";
 import { ReactComponent as NextArrowICON } from "../../../../assets/images/next-arrow.svg";
 
-function RowTitlesCard({ type, url, id }) {
-  const [titles, setTitles] = useState(null);
+function MyList() {
+  const { activeProfile } = useContext(AuthContext);
   const { hideModal } = useContext(HomeContext);
   const [width, setWidth] = useState(window.innerWidth);
-  
-  useEffect(()=>{
-    const storedTitles = sessionStorage.getItem(id);
-    if (storedTitles) {
-      setTitles(JSON.parse(storedTitles));
-    } else{
-      fetch(`https://api.themoviedb.org/3/discover/${type}?api_key=4c42277c85a8a8f307d358420965071c${url}`)
-        .then(response => response.json())
-        .then(data =>{
-          const titles = data.results.filter(title => title.overview)
-          setTimeout(()=>{
-            setTitles(titles);
-          }, 3600)
-          sessionStorage.setItem(id, JSON.stringify(titles));
-        })
-        .catch(error => console.log(error))
-    }
-  }, [])
 
   let slidesToShow;
   
@@ -49,7 +32,6 @@ function RowTitlesCard({ type, url, id }) {
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
-  
 
   function PrevArrow(props) {
     const { onClick, currentSlide } = props;
@@ -124,23 +106,33 @@ function RowTitlesCard({ type, url, id }) {
   };
 
   return (
-    <>
-      { titles
-        ? <Slider {...settings}>
-            { titles.map(title => {
-              return(
-                <TitleCard
-                  key={title.id}
-                  type={type}
-                  title={title}
-                />
-              )})
-            }
-          </Slider>
-        : <TitleCardSkeleton/>
-      }
-    </>
+    <section className="row-title-card">
+      <h2 className="row-title-header">
+        <a className="row-title" href="/browse">
+          <div className="title">
+            Mi Lista
+          </div>
+          <div className="more-visible">
+            <div className="see-all">Explorar todos</div>
+            <div className="arrow-row-title">
+              <ArrowRowTitle/>
+            </div>
+          </div>
+        </a>
+      </h2>
+      <Slider {...settings}>
+        { activeProfile.my_list.map(title => {
+          return(
+            <TitleCard
+              key={title.id}
+              type={title.type}
+              title={title}
+            />
+          )})
+        }
+      </Slider>
+    </section>
   )
 }
 
-export default RowTitlesCard
+export default MyList

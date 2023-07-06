@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { HomeContext } from '../../../../context/HomeContext';
 import { useGetCredits, useGetLogos, useGetTitle, useGetVideo } from '../../../../hooks/GetInfoTitle';
 import { ReactComponent as NetflixOriginals } from "../../../../assets/images/netflix-originals.svg";
+import { AuthContext } from '../../../../context/AuthContext';
 
 function TitleCard({ type, title }) {
+  const { activeProfile } = useContext(AuthContext);
   const { showModal } = useContext(HomeContext);
   const [backdrop, setBackdrop] = useState(null);
   const cardRef = useRef();
@@ -26,7 +28,7 @@ function TitleCard({ type, title }) {
                               data.backdrops.find(backdrop => backdrop)
         setBackdrop(backdropTitle);
       })
-  }, [])
+  }, [activeProfile])
   
   useEffect(()=>{
     function onShowModal() {

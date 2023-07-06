@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { HomeContext } from '../../../../context/HomeContext';
+import { AuthContext } from '../../../../context/AuthContext';
 import usePlayerActions from '../../../../hooks/usePlayerActions';
 import { getDuration, getForYou, getYear } from '../../../../services/getMetadata';
 import { ReactComponent as AddToMyList } from "../../../../assets/images/add.svg";
+import { ReactComponent as AddedToMyList } from "../../../../assets/images/added.svg";
 import { ReactComponent as ThumbsUp } from "../../../../assets/images/thumbs-up.svg";
 import { ReactComponent as ThumbsDown } from "../../../../assets/images/thumbs-down.svg";
 import { ReactComponent as ThumbsWayUp } from "../../../../assets/images/thumbs-way-up.svg";
 import { ReactComponent as NetflixOriginals } from "../../../../assets/images/netflix-originals.svg"
 
 function MiniTitleDetail() {
+  const { activeProfile, setActiveProfile } = useContext(AuthContext);
   const { miniModal, showMiniModal, setShowMiniModal, position, hideModal, onAddInfo } = useContext(HomeContext);
   const { isMuted, isPlaying, isEnded, trailerDuration, showTrailer, actionButton, hidePlayer, endedTrailer, setShowTrailer } = usePlayerActions();
+  const [isAdded, setIsAdded] = useState(false);
   const [metadata, setMetadata] = useState({
     year: null,
     duration: null,
@@ -69,8 +73,36 @@ function MiniTitleDetail() {
     return () => document.removeEventListener("mousemove", handleOnHideModal);
   }, [])
 
+  useEffect(()=>{
+    const inMyList = activeProfile.my_list.find(title => title.id === miniModal.id);
+    if (inMyList) {
+      setIsAdded(true);
+    }
+  }, [activeProfile])
+
   function handleOnAddInfo() {
     onAddInfo(miniModal);
+  }
+
+  function myListAction(){
+    if (isAdded) {
+      setIsAdded(false);
+      setActiveProfile(prev => (
+        {
+          ...prev,
+          my_list: prev.my_list.filter(title => title.id !== miniModal.id)
+        }
+      ))
+    } else{
+      setIsAdded(true);
+      setActiveProfile(prev => ({
+        ...prev,
+        my_list: [
+          ...prev.my_list,
+          miniModal
+        ]
+      }))
+    }
   }
 
   return (
@@ -132,10 +164,10 @@ function MiniTitleDetail() {
               <button className="play-button button-control">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="Hawkins-Icon Hawkins-Icon-Standard"><path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"></path></svg>
               </button>
-              <button className="my-list button-control">
-                <AddToMyList/>
+              <button className="my-list button-control" onClick={myListAction}>
+                { isAdded ? <AddedToMyList/> : <AddToMyList/> }
                 <div className="my-list-tooltip">
-                  Agregar a Mi lista
+                  { isAdded ? "Quitar de Mi lista": "Agregar a Mi lista" }
                 </div>
               </button>
               <button className="thumbs-rate button-control">

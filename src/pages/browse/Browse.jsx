@@ -5,8 +5,11 @@ import LazyRowTitles from './components/SliderTitles/LazyRowTitles';
 import MiniTitleDetail from './components/MiniTitleDetail/MiniTitleDetail';
 import TitleDetail from './components/TitleDetail/TitleDetail';
 import Footer from '../../components/Footer/Footer';
+import MyList from './components/SliderTitles/MyList';
+import { AuthContext } from '../../context/AuthContext';
 
 function Home() {
+  const { activeProfile } = useContext(AuthContext);
   const { search, miniModal, infoTitle } = useContext(HomeContext);
   const [transition, setTransition] = useState(false);
 
@@ -41,6 +44,9 @@ function Home() {
             url={"&with_genres=28&with_watch_providers=8&watch_region=AR"}
             id={"action-movies"}
           />
+          { activeProfile?.my_list?.length > 0 &&
+            <MyList/>
+          }
           <LazyRowTitles
             section={"Series dramáticas coreanas"}
             type={"tv"}
