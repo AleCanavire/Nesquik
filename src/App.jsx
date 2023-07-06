@@ -1,7 +1,7 @@
 import React from 'react';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { HomeContextProvider } from './context/HomeContext';
 import { AuthContextProvider } from './context/AuthContext';
 import Login from './pages/login/Login';
@@ -18,7 +18,7 @@ function App() {
       <AuthContextProvider>
         <HomeContextProvider>
           <Routes>
-            <Route path="/" element={<div>home</div>}/>
+            <Route path="/" element={<Navigate to="/login"/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/profiles" element={<Profiles/>}/>
             <Route path="/profiles/manage" element={<ManageProfiles/>}/>
