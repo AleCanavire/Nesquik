@@ -80,7 +80,7 @@ export function AuthContextProvider({ children }) {
               {
                 id: 1,
                 profile_name: currentUser.displayName.split(" ")[0],
-                profile_icon: "/images/profile1.png",
+                profile_icon: "/images/icons/Los-clásicos-15.png",
                 my_list: []
               }
             ]
