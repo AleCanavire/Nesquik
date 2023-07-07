@@ -67,9 +67,7 @@ export function AuthContextProvider({ children }) {
         if (isRegistered) {
           const requestedUser = await getUser(currentUser.uid);
           setUser((prevState) => {
-            if (location.pathname === "/login"){
-              navigate("/profiles");
-            }
+            navigate("/profiles");
             return requestedUser;
           });
         } else{
@@ -87,11 +85,9 @@ export function AuthContextProvider({ children }) {
           }
           await updateUser(newUser);
           setUser((prevState) => {
-            if (location.pathname === "/login"){
-              setProfileSettings(newUser.profiles[0]);
-              setShowEditor(true);
-              navigate("/profiles/manage");
-            }
+            setProfileSettings(newUser.profiles[0]);
+            setShowEditor(true);
+            navigate("/profiles/manage");
             return newUser;
           });
         }
