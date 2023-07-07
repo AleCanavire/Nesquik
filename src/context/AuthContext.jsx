@@ -66,7 +66,7 @@ export function AuthContextProvider({ children }) {
         const isRegistered = await userExists(currentUser.uid);
         if (isRegistered) {
           const requestedUser = await getUser(currentUser.uid);
-          setUser(() => {
+          setUser((prevState) => {
             if (location.pathname === "/login"){
               navigate("/profiles");
             }
@@ -86,7 +86,7 @@ export function AuthContextProvider({ children }) {
             ]
           }
           await updateUser(newUser);
-          setUser(() => {
+          setUser((prevState) => {
             if (location.pathname === "/login"){
               setProfileSettings(newUser.profiles[0]);
               setShowEditor(true);
@@ -96,6 +96,7 @@ export function AuthContextProvider({ children }) {
           });
         }
       } else {
+        navigate("/login");
         setUser(null);
         setActiveProfile(null);
       }
