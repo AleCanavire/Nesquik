@@ -66,10 +66,12 @@ export function AuthContextProvider({ children }) {
         const isRegistered = await userExists(currentUser.uid);
         if (isRegistered) {
           const requestedUser = await getUser(currentUser.uid);
-          setUser(requestedUser)
-          if (location.pathname === "/login"){
-            navigate("/profiles");
-          }
+          setUser(() => {
+            if (location.pathname === "/login"){
+              navigate("/profiles");
+            }
+            return requestedUser;
+          });
         } else{
           const newUser = {
             id: currentUser.uid,
@@ -84,12 +86,14 @@ export function AuthContextProvider({ children }) {
             ]
           }
           await updateUser(newUser);
-          setUser(newUser);
-          if (location.pathname === "/login"){
-            setProfileSettings(newUser.profiles[0]);
-            setShowEditor(true);
-            navigate("/profiles/manage");
-          }
+          setUser(() => {
+            if (location.pathname === "/login"){
+              setProfileSettings(newUser.profiles[0]);
+              setShowEditor(true);
+              navigate("/profiles/manage");
+            }
+            return newUser;
+          });
         }
       } else {
         setUser(null);
