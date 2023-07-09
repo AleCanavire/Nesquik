@@ -65,8 +65,8 @@ function Search() {
             }
           </div>
         </div>
+        <Footer/>
       </div>
-      <Footer/>
       { miniModal &&
         <MiniTitleDetail/>
       }
