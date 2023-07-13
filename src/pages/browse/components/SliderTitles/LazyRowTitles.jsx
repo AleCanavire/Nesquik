@@ -27,9 +27,9 @@ function LazyRowTitles({ section, type, url, id }) {
 
   
   return (
-    <section id={id} className="row-title-card">
+    <section className="row-title-card" id={id}>
       <h2 className="row-title-header">
-        <a className="row-title" href="/browse">
+        <a className="row-title">
           <div className="title">
             {section}
           </div>
@@ -41,14 +41,15 @@ function LazyRowTitles({ section, type, url, id }) {
           </div>
         </a>
       </h2>
-      { show &&
-        <Suspense fallback={<TitleCardSkeleton/>}>
-          <RowTitlesCard
-            type={type}
-            url={url}
-            id={id}
-          />
-        </Suspense>
+      { show
+        ? <Suspense fallback={<TitleCardSkeleton/>}>
+            <RowTitlesCard
+              type={type}
+              url={url}
+              id={id}
+            />
+          </Suspense>
+        : <TitleCardSkeleton/>
       }
     </section>
   )

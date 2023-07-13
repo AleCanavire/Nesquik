@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import { HomeContext } from '../../../../context/HomeContext';
 import TitleCard from './TitleCard';
-import TitleCardSkeleton from './TitleCardSkeleton';
 import { ReactComponent as PrevArrowICON } from "../../../../assets/images/prev-arrow.svg";
 import { ReactComponent as NextArrowICON } from "../../../../assets/images/next-arrow.svg";
+import TitleCardSkeleton from './TitleCardSkeleton';
 
 function RowTitlesCard({ type, url, id }) {
   const [titles, setTitles] = useState(null);
@@ -14,7 +14,9 @@ function RowTitlesCard({ type, url, id }) {
   useEffect(()=>{
     const storedTitles = sessionStorage.getItem(id);
     if (storedTitles) {
-      setTitles(JSON.parse(storedTitles));
+      setTimeout(()=>{
+        setTitles(JSON.parse(storedTitles));
+      }, 100)
     } else{
       fetch(`https://api.themoviedb.org/3/discover/${type}?api_key=4c42277c85a8a8f307d358420965071c${url}`)
         .then(response => response.json())
@@ -135,7 +137,7 @@ function RowTitlesCard({ type, url, id }) {
                   title={title}
                 />
               )})
-            }
+          }
           </Slider>
         : <TitleCardSkeleton/>
       }
