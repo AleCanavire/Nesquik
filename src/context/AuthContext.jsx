@@ -7,7 +7,7 @@ import {
 } from 'firebase/auth';
 import { auth } from '../firebase/firebase.config';
 import { getUser, updateUser, userExists } from '../firebase/firestore';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
@@ -18,7 +18,6 @@ export function AuthContextProvider({ children }) {
   const [showEditor, setShowEditor] = useState(false);
   const [showIcons, setShowIcons] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Iniciar sesion con Google
   const googleSignIn = () => {
