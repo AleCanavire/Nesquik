@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext';
 import { HomeContext } from '../../context/HomeContext';
 import Header from './components/Header/Header';
 import LazyRowTitles from './components/SliderTitles/LazyRowTitles';
@@ -6,7 +7,7 @@ import MiniTitleDetail from './components/MiniTitleDetail/MiniTitleDetail';
 import TitleDetail from './components/TitleDetail/TitleDetail';
 import Footer from '../../components/Footer/Footer';
 import MyList from './components/SliderTitles/MyList';
-import { AuthContext } from '../../context/AuthContext';
+import TopMovies from './components/SliderTitles/TopMovies';
 
 function Home() {
   const { activeProfile } = useContext(AuthContext);
@@ -26,6 +27,9 @@ function Home() {
       <div className="main-view">
         <Header/>
         <main>
+          <TopMovies
+            id={"movies-rank"}
+          />
           <LazyRowTitles
             section={"Agregados recientemente"}
             type={"tv"}
